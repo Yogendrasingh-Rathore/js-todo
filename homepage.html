@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>To-Do Homepage</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#register").hide();
+                $("#login").hide();
+            });
+
+            $(function(){
+
+            ​$("#login_btn").on("click", function() {
+                $("#login, #register").toggle();
+            });
+
+            ​$("#register_btn").on("click", function() {
+                $("#login, #register").hide();
+            });
+
+            });
+
+        </script>
+
+
+    </head>
+
+    <body>
+        <div id="title">
+            <center><h1> Welcome To the To-Do Homepage</h1></center>
+        </div>
+        <hr>
+
+        <div id="login_div">
+            <input type="submit" value="Login" id="login_btn" style="float: right;"/>
+            &nbsp;&nbsp;&nbsp;
+            <input type="submit" value="Create Your Account" id="register_btn" style="float: right;">
+        </div>
+
+        <br>
+        <br>
+        <hr>
+
+        <div id="image">
+        <center><img src="homepage.jpg" width="75%" height="75%"></center>
+        </div>
+
+        <div id ="register">
+            <form method="POST" action="">
+                <center>
+                    <h2> Create Your Account </h2>
+                    <table border="1">
+                        <tr>
+                            <th> Username : </th>
+                            <td> <input type="text" id="uname" required /> </td>
+                        </tr>
+                        <tr>
+                            <th> Password : </th>
+                            <td> <input type="password" id="pwd" required /> </td>
+                        </tr>
+                        <tr>
+                            <th> Confirm Password : </th>
+                            <td> <input type="password" id="cpwd" required /> </td>
+                        </tr>
+                        <tr>
+                            <th> Gender : </th>
+                            <td> <input type="radio" name="gender" value="male"> Male 
+                                <input type="radio" name="gender" value="female"> Female
+                            </td>
+                        </tr>
+                        <tr>
+                            <th> Email : </th>
+                            <td> <input type="email" id="email" required /> </td>
+                        </tr>
+                        <tr>
+                            <th> Address : </th>
+                            <td> <textarea id="addr" cols="25" rows="5" required > </textarea> </td>
+                        </tr>
+
+                        <tr>
+                            <th> Profile Picture : </th>
+                            <td> <input type="file" id="profile_id" required /> </td>
+                        </tr>
+
+                        <tr>
+                            <td> <input type="submit" value="Register" id="Register"/> </td>
+                            <td> <input type="reset"> </td>
+                        </tr>
+
+                    </table>
+                </center>
+            </form>
+        </div>        
+
+        <div id = "login">
+            <form method="POST" action="">
+                <center>
+                <h2> Sign In Your Account </h2>
+                    <table border="1">
+                        <tr>
+                            <th> Username : </th>
+                            <td> <input type="text" id="uname" required /> </td>
+                        </tr>
+                        <tr>
+                            <th> Password : </th>
+                            <td> <input type="password" id="pwd" required /> </td>
+                        </tr>
+                        <tr>
+                            <td> <input type="submit" value="login" id="login"/> </td>
+                            <td> <input type="reset"> </td>
+                        </tr>
+                    </table>
+                </center>
+            </form>
+        </div>
+
+    </body>
+</html>
