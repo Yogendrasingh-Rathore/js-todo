@@ -1,27 +1,30 @@
+<meta charset="utf-8"/>
 <html>
     <head>
         <title>To-Do Homepage</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+        
         <script>
             $(document).ready(function() {
                 $("#register").hide();
                 $("#login").hide();
             });
 
-            $(function(){
+            function login_fn() {
+             $("#image").hide();
+             $("#register").hide();
+             $("#login").show();
+            }
 
-            ​$("#login_btn").on("click", function() {
-                $("#login, #register").toggle();
-            });
+            function register_fn() {
+             $("#image").hide();
+             $("#login").hide();
+             $("#register").show();
+            }
 
-            ​$("#register_btn").on("click", function() {
-                $("#login, #register").hide();
-            });
-
-            });
 
         </script>
+
 
 
     </head>
@@ -33,9 +36,9 @@
         <hr>
 
         <div id="login_div">
-            <input type="submit" value="Login" id="login_btn" style="float: right;"/>
+            <input type="submit" value="Login" id="login_btn" onclick="login_fn()" style="float: right;"/>
             &nbsp;&nbsp;&nbsp;
-            <input type="submit" value="Create Your Account" id="register_btn" style="float: right;">
+            <input type="submit" value="Create Your Account" id="register_btn" onclick="register_fn()" style="float: right;">
         </div>
 
         <br>
@@ -43,25 +46,25 @@
         <hr>
 
         <div id="image">
-        <center><img src="homepage.jpg" width="75%" height="75%"></center>
+        <center><img src="homepage.png" width="75%" height="75%"></center>
         </div>
 
         <div id ="register">
-            <form method="POST" action="">
+            <form method="POST">
                 <center>
                     <h2> Create Your Account </h2>
                     <table border="1">
                         <tr>
                             <th> Username : </th>
-                            <td> <input type="text" id="uname" required /> </td>
+                            <td> <input type="text" id="r_uname" required /> </td>
                         </tr>
                         <tr>
                             <th> Password : </th>
-                            <td> <input type="password" id="pwd" required /> </td>
+                            <td> <input type="password" id="r_pwd" required /> </td>
                         </tr>
                         <tr>
                             <th> Confirm Password : </th>
-                            <td> <input type="password" id="cpwd" required /> </td>
+                            <td> <input type="password" id="r_cpwd" required /> </td>
                         </tr>
                         <tr>
                             <th> Gender : </th>
@@ -75,16 +78,16 @@
                         </tr>
                         <tr>
                             <th> Address : </th>
-                            <td> <textarea id="addr" cols="25" rows="5" required > </textarea> </td>
+                            <td> <textarea id="addr" cols="33" rows="5" style="resize: none;" required > </textarea> </td>
                         </tr>
 
                         <tr>
                             <th> Profile Picture : </th>
-                            <td> <input type="file" id="profile_id" required /> </td>
+                            <td> <input type="file" id="profile_pic" required /> </td>
                         </tr>
 
                         <tr>
-                            <td> <input type="submit" value="Register" id="Register"/> </td>
+                            <td> <input type="button" value="Register" id="Register" onclick="validation()"/> </td>
                             <td> <input type="reset"> </td>
                         </tr>
 
@@ -100,14 +103,14 @@
                     <table border="1">
                         <tr>
                             <th> Username : </th>
-                            <td> <input type="text" id="uname" required /> </td>
+                            <td> <input type="text" id="l_uname" required /> </td>
                         </tr>
                         <tr>
                             <th> Password : </th>
-                            <td> <input type="password" id="pwd" required /> </td>
+                            <td> <input type="password" id="l_pwd" required /> </td>
                         </tr>
                         <tr>
-                            <td> <input type="submit" value="login" id="login"/> </td>
+                            <td> <input type="button" value="login" id="login" onclick="auth()"/> </td>
                             <td> <input type="reset"> </td>
                         </tr>
                     </table>
@@ -115,5 +118,11 @@
             </form>
         </div>
 
+        <div id="result">
+              
+        </div>
+
+        <script src="register.js"></script>
+        <script src="login.js"></script>
     </body>
 </html>
