@@ -1,0 +1,73 @@
+<meta charset="utf-8"/>
+ <html>
+ <head>
+     <title> To Do App </title>
+
+</head>
+<body>
+    <div id ="header">
+        <p>
+            <h2>Welcome {{ }}</h2>
+            <img src="homepage.png" alt="Profile Pic" style="width:9%;border-radius: 45%;">
+            <input type="button" value="Logout" onclick="logout()">
+        </p> 
+    </div>
+
+    <p id="time_date"> </p>
+
+    <div id="myDIV" class="header">
+        <h2>My To Do List</h2>
+        <input type="text" id="myInput" placeholder="Title...">
+        <span onclick="newElement()" class="addBtn">Add</span>
+
+
+
+    </div>
+    
+    <div id ="filter">
+        <p>
+            <select name="category">
+                        <option value="blank"></option>
+                        <option value="Linux">Linux</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Docker">Docker</option>
+                        <option value="Kubernetes">Kubernetes</option>
+            </select> 
+
+            
+            Start Date : <input type="date"/>
+            End Date : <input type="date"/>
+            
+            Status : 
+            <select name="status">
+                <option value="blank"></option>
+                <option value="To-Do">To-Do</option>
+                <option value="In-Progress">In-Progress</option>
+                <option value="Done">Done</option>
+            </select>
+        
+        </p>   
+    </div>
+
+    <div id ="content">
+        <table border="1">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+            var d = new Date();
+            document.getElementById("time_date").innerHTML = d.getDate();            
+    </script>
+
+    <script src ="logout.js" ></script>
+
+</body>
+</html>
