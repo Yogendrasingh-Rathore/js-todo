@@ -1,8 +1,9 @@
-var uname = document.getElementById("r_uname").value;
-var pwd = document.getElementById("r_pwd").value;
 
 function auth()
 {
+    var uname = document.getElementById("l_uname").value;
+    var pwd = document.getElementById("l_pwd").value;
+
     if(uname == localStorage.getItem("username") && pwd == localStorage.getItem("pwd"))
     {
         alert("Login Successfull");
@@ -11,6 +12,6 @@ function auth()
     else
     {
         alert("Invalid Credentials!");
-        location.replace("to-do-mainpage.html");
+        location.href = "homepage.html";
     }
 }
