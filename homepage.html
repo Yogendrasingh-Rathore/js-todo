@@ -60,16 +60,16 @@
                         </tr>
                         <tr>
                             <th> Password : </th>
-                            <td> <input type="password" id="r_pwd" required /> </td>
+                            <td> <input type="password" id="r_password" required /> </td>
                         </tr>
                         <tr>
                             <th> Confirm Password : </th>
-                            <td> <input type="password" id="r_cpwd" required /> </td>
+                            <td> <input type="password" id="r_cpassword" required /> </td>
                         </tr>
                         <tr>
                             <th> Gender : </th>
-                            <td> <input type="radio" name="gender" value="male"> Male 
-                                <input type="radio" name="gender" value="female"> Female
+                            <td> <input type="radio" name="gender" value="male" id="gender"> Male 
+                                <input type="radio" name="gender" value="female" id="gender"> Female
                             </td>
                         </tr>
                         <tr>
@@ -78,7 +78,7 @@
                         </tr>
                         <tr>
                             <th> Address : </th>
-                            <td> <textarea id="addr" cols="33" rows="5" style="resize: none;" required > </textarea> </td>
+                            <td> <textarea id="address" cols="33" rows="5" style="resize: none;" required > </textarea> </td>
                         </tr>
 
                         <tr>
@@ -107,7 +107,7 @@
                         </tr>
                         <tr>
                             <th> Password : </th>
-                            <td> <input type="password" id="l_pwd" required /> </td>
+                            <td> <input type="password" id="l_password" required /> </td>
                         </tr>
                         <tr>
                             <td> <input type="button" value="login" id="login" onclick="auth()"/> </td>
@@ -124,5 +124,6 @@
 
         <script src="register.js"></script>
         <script src="login.js"></script>
+        <script src ="records.js"></script>
     </body>
 </html>

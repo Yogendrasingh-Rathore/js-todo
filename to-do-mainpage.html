@@ -15,18 +15,15 @@
 
     <p id="time_date"> </p>
 
-    <div id="myDIV" class="header">
+    <div id="myDIV">
         <h2>My To Do List</h2>
         <input type="text" id="myInput" placeholder="Title...">
-        <span onclick="newElement()" class="addBtn">Add</span>
-
-
-
+        <input type="button" onclick="store_data()" class="addBtn" value ="Add Task"/>
     </div>
     
     <div id ="filter">
         <p>
-            <select name="category">
+            <select id="category">
                         <option value="blank"></option>
                         <option value="Linux">Linux</option>
                         <option value="Networking">Networking</option>
@@ -35,16 +32,20 @@
             </select> 
 
             
-            Start Date : <input type="date"/>
-            End Date : <input type="date"/>
+            Start Date : <input type="date" id ="start_date" />
+            End Date : <input type="date" id ="end_date"/>
             
             Status : 
-            <select name="status">
+            <select id="status">
                 <option value="blank"></option>
                 <option value="To-Do">To-Do</option>
                 <option value="In-Progress">In-Progress</option>
                 <option value="Done">Done</option>
             </select>
+
+            <textarea id ="task" cols ="30" rows="2" style="resize: none;" placeholder="Enter Task Description">
+            </textarea>
+           
         
         </p>   
     </div>
@@ -68,6 +69,7 @@
     </script>
 
     <script src ="logout.js" ></script>
+    <script src ="records.js" ></script>
 
 </body>
 </html>

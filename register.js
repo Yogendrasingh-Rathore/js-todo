@@ -1,20 +1,20 @@
-var pwd, uname, cpwd, gender, email, addr, profile_pic;
+var password, uname, cpassword, gender, email, address, profile_pic;
 
 function validation()
 {
     var flag = 1;
-    pwd = document.getElementById("r_pwd").value;
+    password = document.getElementById("r_password").value;
     uname = document.getElementById("r_uname").value;
-    cpwd = document.getElementById("r_cpwd").value;
+    cpassword = document.getElementById("r_cpassword").value;
     gender = document.getElementById("gender");
     email = document.getElementById("email").value;
-    addr = document.getElementById("addr").value;
+    address = document.getElementById("address").value;
     profile_pic = document.getElementById("profile_pic").value;
 
 
-    var patt_pwd =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+    var patt_password =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     
-    if(!patt_pwd.test(pwd))
+    if(!patt_password.test(password))
     {
         alert("Invalid Password, Must have minimum length 6, 1 lowercase, 1 uppercase, 1 digit, 1 special char");
         flag = 0;
@@ -39,7 +39,7 @@ function validation()
 
     if(flag != 0)
     {
-        store_data();
+        profile_data();
     }
     else
     {
@@ -47,30 +47,3 @@ function validation()
     }
    
 }    
-
-function store_data()
-{
-    if (typeof(Storage) !== "undefined") {
-        // Store
-
-        var profile = [uname,pwd,email,addr,profile_pic];
-        var records = { pid : profile, to_do : ["category", "from", "to", "status"]};
-        
-        localStorage.setItem("yuvi_records",JSON.stringify(records));
-
-        // localStorage.setItem("username", uname);
-        // localStorage.setItem("pwd", pwd);
-        // // localStorage.setItem("gender", gender);
-        // localStorage.setItem("email", email);
-        // localStorage.setItem("addr", addr);
-        // localStorage.setItem("profile_pic", profile_pic);
-        // // Retrieve
-
-        var getval = JSON.parse(localStorage.getItem("yuvi_records"));
-        document.getElementById("result").innerHTML = getval[0];
-        alert(getval[0] + " has Successfully Registered !");
-        window.location.href = "homepage.html";
-      } else {
-        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-      }
-}
