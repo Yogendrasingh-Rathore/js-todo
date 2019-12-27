@@ -7,7 +7,9 @@
 <body>
     <div id ="header">
         <p>
-            <h2>Welcome {{ }}</h2>
+            <h2>Welcome <span id ="activeUser"></span> </h2>
+            <script>document.getElementById("activeUser").innerHTML = sessionStorage.getItem('activeUser');
+                </script>
             <img src="homepage.png" alt="Profile Pic" style="width:9%;border-radius: 45%;">
             <input type="button" value="Logout" onclick="logout()">
         </p> 
@@ -17,8 +19,9 @@
 
     <div id="myDIV">
         <h2>My To Do List</h2>
-        <input type="text" id="myInput" placeholder="Title...">
-        <input type="button" onclick="store_data()" class="addBtn" value ="Add Task"/>
+        <input type="text" id="category_name" placeholder="Title...">
+        <input type="button" onclick="add_category()"  value ="Add New Category"/>
+        <input type="button" onclick="to_do()"  value ="Add Task"/>
     </div>
     
     <div id ="filter">
@@ -65,7 +68,23 @@
 
     <script>
             var d = new Date();
-            document.getElementById("time_date").innerHTML = d.getDate();            
+            document.getElementById("time_date").innerHTML = d.getDate();    
+            
+            function add_category()
+            {
+                let category_name = document.getElementById('category_name').value;
+                let sel = document.getElementById('category');
+
+                let opt = document.createElement('option');
+
+                opt.appendChild( document.createTextNode(category_name) );
+
+                // set value property of opt
+                opt.value = category_name; 
+
+                // add opt to end of select box (sel)
+                sel.appendChild(opt); 
+            }
     </script>
 
     <script src ="logout.js" ></script>
