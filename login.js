@@ -6,13 +6,20 @@ function auth()
     let obj = JSON.parse(localStorage.getItem('users')) || [];
     let val = [];
     val = obj.userNames;
+    // login_email = obj.emailld;
+
+    if(uname == "" || password == "")
+    {
+        alert("UserName and Password cannot be left blank!");
+        location.href = 'homepage.html';
+    }
 
     for(let key in val)
     {
         
-        if(val.hasOwnProperty(key)){
+        if(val.hasOwnProperty(key) ){
             
-            if(val[key] == uname)
+            if(val[key] == uname )
             {
                 let userDetails = JSON.parse(localStorage.getItem(obj.userNames[key]));
                 if(userDetails){

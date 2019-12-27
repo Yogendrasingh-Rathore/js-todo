@@ -1,6 +1,6 @@
-<meta charset="utf-8"/>
  <html>
  <head>
+     <meta charset="utf-8"/>
      <title> To Do App </title>
 
 </head>
@@ -35,8 +35,8 @@
             </select> 
 
             
-            Start Date : <input type="date" id ="start_date" />
-            End Date : <input type="date" id ="end_date"/>
+            Start Date : <input type="date" id ="start_date" onchange="date_validation()"/>
+            End Date : <input type="date" id ="end_date" onchange="date_validation()"/>
             
             Status : 
             <select id="status">
@@ -49,6 +49,14 @@
             <textarea id ="task" cols ="30" rows="2" style="resize: none;" placeholder="Enter Task Description">
             </textarea>
            
+            <label id ="">isReminder</label>
+            <input type="radio" name="isReminder" id="isReminder"> Yes
+            <input type="radio" name="isReminder" id="isReminder"> No
+            <label id ="">Reminder Date : </label> <input type="date">
+
+            <label id ="">isPublic</label>
+            <input type="radio" name="isPublic" id="isPublic"> Yes
+            <input type="radio" name="isPublic" id="isPublic"> No
         
         </p>   
     </div>
@@ -89,6 +97,7 @@
 
     <script src ="logout.js" ></script>
     <script src ="records.js" ></script>
+    <script src ="register.js" ></script>
 
 </body>
 </html>
