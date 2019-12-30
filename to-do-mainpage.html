@@ -4,7 +4,7 @@
      <title> To Do App </title>
 
 </head>
-<body>
+<body onload="to_do_display()">
     <div id ="header">
         <p>
             <h2>Welcome <span id ="activeUser"></span> </h2>
@@ -18,16 +18,13 @@
     <p id="time_date"> </p>
 
     <div id="myDIV">
-        <h2>My To Do List</h2>
         <input type="text" id="category_name" placeholder="Title...">
         <input type="button" onclick="add_category()"  value ="Add New Category"/>
-        <input type="button" onclick="to_do()"  value ="Add Task"/>
     </div>
     
     <div id ="filter">
         <p>
             <select id="category">
-                        <option value="blank"></option>
                         <option value="Linux">Linux</option>
                         <option value="Networking">Networking</option>
                         <option value="Docker">Docker</option>
@@ -40,43 +37,59 @@
             
             Status : 
             <select id="status">
-                <option value="blank"></option>
                 <option value="To-Do">To-Do</option>
                 <option value="In-Progress">In-Progress</option>
                 <option value="Done">Done</option>
             </select>
 
-            <textarea id ="task" cols ="30" rows="2" style="resize: none;" placeholder="Enter Task Description">
-            </textarea>
-           
-            <label id ="">isReminder</label>
-            <input type="radio" name="isReminder" id="isReminder"> Yes
-            <input type="radio" name="isReminder" id="isReminder"> No
-            <label id ="">Reminder Date : </label> <input type="date">
+            <textarea rows="2" cols="30" placeholder="Enter Task Description here..." id ="task" style="resize: none;"></textarea>
+            <br><br>
+            <table border="1">
+                <tr>
+                    <th>isReminder</th>
+                    <td><input type="radio" id="isReminder_yes_btn" name="isReminder"> Yes</td>
+                    <td><input type="radio" id="isReminder_no_btn" name="isReminder"> No</td>
+                </tr>
+            </table>
+            <br>
+            Reminder Date :
+            <input type="date" id="isReminder_date"><br><br>
+            
+            <table border="1">
+                <tr>
+                    <th>isPublic</th>
+                    <td><input type="radio" id="isPublic_yes_btn" name="isPublic"> Yes</td>
+                    <td><input type="radio" id="isPublic_no_btn" name="isPublic"> No</td>
+                </tr>
+            </table>
 
-            <label id ="">isPublic</label>
-            <input type="radio" name="isPublic" id="isPublic"> Yes
-            <input type="radio" name="isPublic" id="isPublic"> No
-        
+            <br>
+            <input type="button" onclick="to_do()"  value ="Add Task">
         </p>   
     </div>
 
     <div id ="content">
-        <table border="1">
+        <h2>My To Do List</h2>
+        <table id ="todolist" border="2">
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <th>Category</th>
+                <th>Task</th>
+                <th>Start_date</th>
+                <th>End_date</th>
+                <th>Status</th>
+                <th>isReminder</th>
+                <th>Reminder Date</th>
+                <th>isPublic</th>
+                <th>Action</th>
             </tr>
+
         </table>
     </div>
 
     <script>
             var d = new Date();
-            document.getElementById("time_date").innerHTML = d.getDate();    
+            var display_date = ''+ d.getDate() +'/'+ d.getMonth() + '/'+d.getFullYear();
+            document.getElementById("time_date").innerHTML = display_date;    
             
             function add_category()
             {
