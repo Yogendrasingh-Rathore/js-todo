@@ -22,6 +22,7 @@ function auth()
             if(val[key] == uname )
             {
                 let userDetails = JSON.parse(localStorage.getItem(obj.userNames[key]));
+
                 if(userDetails){
                     if(userDetails.password == password){
                         sessionStorage.setItem('activeUser',obj.userNames[key]);

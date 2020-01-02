@@ -1,3 +1,8 @@
+(function () {
+    $("#login").hide();
+    $("#register").show();
+})();
+
 var password, uname, cpassword, gender, email, address, profile_pic;
 
 function validation()
@@ -66,4 +71,27 @@ function date_validation()
             document.getElementById("end_date").value = "";
             document.getElementById("start_date").value = "";
     }
+
+    let ToDate = new Date();
+
+    if (new Date(startDate).getTime() <= ToDate.getTime() || new Date(endDate).getTime() <= ToDate.getTime()) {
+          alert("The Date must be Bigger or Equal to today date");
+          document.getElementById("end_date").value = "";
+          document.getElementById("start_date").value = "";
+     }
+
+}
+
+function isReminderdate()
+{
+    let startDate = document.getElementById("start_date").value;
+    let endDate = document.getElementById("end_date").value;
+    let isReminder_date = document.getElementById("isReminder_date").value;
+
+    if (isReminder_date < startDate || isReminder_date > endDate)
+     {
+          alert("The Date must be between " + startDate + " and " + endDate);
+          document.getElementById("isReminder_date").value = "";
+    
+     }
 }

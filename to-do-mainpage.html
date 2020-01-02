@@ -47,22 +47,19 @@
             <table border="1">
                 <tr>
                     <th>isReminder</th>
-                    <td><input type="radio" id="isReminder_yes_btn" name="isReminder"> Yes</td>
-                    <td><input type="radio" id="isReminder_no_btn" name="isReminder"> No</td>
-                </tr>
-            </table>
-            <br>
-            Reminder Date :
-            <input type="date" id="isReminder_date"><br><br>
-            
-            <table border="1">
-                <tr>
+                    <td>
+                        <input type="radio" id="isReminder" name="isReminder" value="Yes"> Yes
+                        <input type="radio" id="isReminder" name="isReminder" value="No"> No
+                    </td>
+                    <th>Reminder Date :</th>
+                    <td><input type="date" id="isReminder_date" onchange="isReminderdate()"><br><br></td>
                     <th>isPublic</th>
-                    <td><input type="radio" id="isPublic_yes_btn" name="isPublic"> Yes</td>
-                    <td><input type="radio" id="isPublic_no_btn" name="isPublic"> No</td>
+                    <td>
+                        <input type="radio" id="isPublic" name="isPublic" value="Yes"> Yes
+                        <input type="radio" id="isPublic" name="isPublic" value="No"> No</td>
                 </tr>
             </table>
-
+            
             <br>
             <input type="button" onclick="to_do()"  value ="Add Task">
         </p>   
@@ -88,7 +85,7 @@
 
     <script>
             var d = new Date();
-            var display_date = ''+ d.getDate() +'/'+ d.getMonth() + '/'+d.getFullYear();
+            var display_date = ''+ d.getDate() +'/'+ (d.getMonth()+1) + '/'+d.getFullYear();
             document.getElementById("time_date").innerHTML = display_date;    
             
             function add_category()
