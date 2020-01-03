@@ -115,14 +115,17 @@ function to_do_display()
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
     to_do_list = get_userData.todo;
+    let todoid;
 
     for(key in to_do_list)
     {        
         if(to_do_list.hasOwnProperty(key) ){
            
-            let data = Object.values(to_do_list[key]);
+            let data = [];
+            data = Object.values(to_do_list[key]);
             let tr = document.createElement("TR");
             document.getElementById("todolist").appendChild(tr);
+            todoid = data[9]; 
 
             for(let key2 in data)
             {        
@@ -137,26 +140,24 @@ function to_do_display()
                 }
             }                      
         }
+        
 
-        let isReminder_name = 'isReminder' + key;
-        //let isReminder_id = 'isReminder' + key;
-        //createRadioButton(isReminder_name);
-        //createCalender();
-        let isPublic_name = 'isPublic' + key;
-        //createRadioButton(isPublic_name);
+        let isReminder_name = 'isReminder' + todoid;
+
+        let isPublic_name = 'isPublic' + todoid;
         
-        let Delete_id = 'Delete' + key;
-        let Update_id = 'Update' + key;
-        let EditMode_id = 'EditMode' + key;
+        let Delete_id = 'Delete' + todoid;
+        let Update_id = 'Update' + todoid;
+        let EditMode_id = 'EditMode' + todoid;
         
-        createButton();
+        createButton(Update_id,Delete_id,EditMode_id);
         
     } 
 
 }
 
 
-function createButton()
+function createButton(Update_id,Delete_id,EditMode_id)
 {
     
     let button_Update = document.createElement("INPUT");
@@ -204,6 +205,7 @@ function todo_EditMode(EditMode_id)
             let data = [];
             data = Object.values(to_do_list[key]);
             alert(EditMode_id);
+            alert(data);
             if(data[9] == user_to_id)
             {
                 
@@ -233,7 +235,7 @@ function todo_EditMode(EditMode_id)
 
 }
 
-function todo_Delete()
+function todo_Delete(Delete_id)
 {
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
@@ -266,15 +268,15 @@ function todo_Delete()
 
 }
 
-function todo_Update()
+function todo_Update(Update_id)
 {
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
 
     let to_do_list = [];
     to_do_list = get_userData.todo;
 
-    // let size = Update_id.length;
-    // let user_to_id = Update_id.charAt(size-1);
+    let size = Update_id.length;
+    let user_to_id = Update_id.charAt(size-1);
 
     let e = document.getElementById("category");
     let category = e.options[e.selectedIndex].value;
@@ -300,7 +302,7 @@ function todo_Update()
             let data = [];
             data = Object.values(to_do_list[key]);
             
-            if(data[9] == this.id)
+            if(data[9] == user_to_id)
             {
                 data[0] = category;
                 data[1] = task;

@@ -1,8 +1,3 @@
-(function () {
-    $("#login").hide();
-    $("#register").show();
-})();
-
 var password, uname, cpassword, gender, email, address, profile_pic;
 
 function validation()
