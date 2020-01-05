@@ -1,3 +1,61 @@
+(function ()
+{
+    
+    let get_userData = {};
+    get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    let to_do_list = [];
+    to_do_list = get_userData.todo;
+    let todoid;
+
+    let profile_image = document.getElementById("profile_image");
+    let pic_address = get_userData['userImage'];
+    
+    
+    profile_image.innerHTML = profile_image.setAttribute("src",pic_address);
+
+    let d = new Date();
+
+    for(key in to_do_list)
+    {        
+        if(to_do_list.hasOwnProperty(key) ){
+           
+            let data = [];
+            data = Object.values(to_do_list[key]);
+            let tr = document.createElement("TR");
+            document.getElementById("todolist").appendChild(tr);
+            todoid = data[9]; 
+
+            for(let key2 in data)
+            {        
+                if (key2 > 7)
+                    break; 
+                if(data.hasOwnProperty(key2) ){  
+                    
+                    let td = document.createElement("TD");
+                    let td_data = document.createTextNode(data[key2]);
+                    td.appendChild(td_data);
+                    document.getElementById("todolist").appendChild(td);
+                }
+            }
+            
+            if(data[5] == "Yes" && new Date(data[6]).getDate() == d.getDate() && new Date(data[6]).getMonth() == d.getMonth() && new Date(data[6]).getFullYear() == d.getFullYear())
+            {
+                alert("Reminder for Task : "+ data[1]+ ' Start Date: '+ data[2]+ ' End Date: ' + data[3] + ' Status: ' +data[4]);
+            
+            }                      
+        }
+        
+        
+        let Delete_id = 'Delete' + todoid;
+        let Update_id = 'Update' + todoid;
+        let EditMode_id = 'EditMode' + todoid;
+        
+        createButton(Update_id,Delete_id,EditMode_id);
+        
+    } 
+
+})();
+
 function profile_data()
 {
 var userName = document.getElementById("r_uname").value;
@@ -109,52 +167,6 @@ function to_do()
 }
 
 
-function to_do_display()
-{
-    
-    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let to_do_list = [];
-    to_do_list = get_userData.todo;
-    let todoid;
-
-    for(key in to_do_list)
-    {        
-        if(to_do_list.hasOwnProperty(key) ){
-           
-            let data = [];
-            data = Object.values(to_do_list[key]);
-            let tr = document.createElement("TR");
-            document.getElementById("todolist").appendChild(tr);
-            todoid = data[9]; 
-
-            for(let key2 in data)
-            {        
-                if (key2 > 7)
-                    break; 
-                if(data.hasOwnProperty(key2) ){  
-                    
-                    let td = document.createElement("TD");
-                    let td_data = document.createTextNode(data[key2]);
-                    td.appendChild(td_data);
-                    document.getElementById("todolist").appendChild(td);
-                }
-            }                      
-        }
-        
-
-        let isReminder_name = 'isReminder' + todoid;
-
-        let isPublic_name = 'isPublic' + todoid;
-        
-        let Delete_id = 'Delete' + todoid;
-        let Update_id = 'Update' + todoid;
-        let EditMode_id = 'EditMode' + todoid;
-        
-        createButton(Update_id,Delete_id,EditMode_id);
-        
-    } 
-
-}
 
 
 function createButton(Update_id,Delete_id,EditMode_id)

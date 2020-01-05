@@ -38,12 +38,20 @@
             </tr>
             <tr>
                 <th>
+                    Confirm Password :
+                </th>
+                <td>
+                    <input type="password" id="confirm_new_password">
+                </td>
+            </tr>
+            <tr>
+                <th>
                     Gender :
                 </th>
                 <td>
-                    <input type="radio" name="gender" value="male" id="gender"> Male 
-                    <input type="radio" name="gender" value="female" id="gender"> Female
-                    <input type="radio" name="gender" value="other" id="gender"> Other
+                    <input type="radio" name="gender" value="male" id="gender_male"> Male 
+                    <input type="radio" name="gender" value="female" id="gender_female"> Female
+                    <input type="radio" name="gender" value="other" id="gender_other"> Other
                 </td>
             </tr>
             <tr>
@@ -64,15 +72,15 @@
             </tr>
 
             <tr>
-                <td> <input type="button" value="Update Profile" id="update_profile" onclick="validation()"/> </td>
+                <td> <input type="button" value="Update Profile" id="update_profile" onclick="profile_validation()"/> </td>
                 <td> <input type="reset"> </td>
             </tr>
         </form>
         </table>
 
+        <script src ="profile.js" ></script>
         <script src ="logout.js" ></script>
-        <script src ="records.js" ></script>
-        <script src ="register.js" ></script>
-        
+        <script src ="validation.js" ></script>
+
     </body>
 </html>

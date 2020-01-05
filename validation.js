@@ -56,6 +56,7 @@ function validation()
    
 }    
 
+
 function date_validation()
 {
     let startDate = document.getElementById("start_date").value;

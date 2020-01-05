@@ -4,13 +4,16 @@
      <title> To Do App </title>
 
 </head>
-<body onload="to_do_display()">
+<body>
     <div id ="header">
-        <p>
+        
             <h2>Welcome <span id ="activeUser"></span> </h2>
             <script>document.getElementById("activeUser").innerHTML = sessionStorage.getItem('activeUser');
                 </script>
-            <img src="homepage.png" alt="Profile Pic" style="width:9%;border-radius: 45%;">
+        <p>
+            <img id ="profile_image" alt='Profile Pic' style='width:9%;border-radius: 45%;'>
+        
+        
             <input type="button" value="Update Profile" onclick="location.href = 'profile.html'">
             <input type="button" value="Logout" onclick="logout()">
         </p> 
@@ -108,7 +111,7 @@
 
     <script src ="logout.js" ></script>
     <script src ="records.js" ></script>
-    <script src ="register.js" ></script>
+    <script src ="validation.js" ></script>
 
 </body>
 </html>
