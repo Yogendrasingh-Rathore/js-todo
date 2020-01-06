@@ -68,7 +68,47 @@
             <input type="button" onclick="to_do()"  value ="Add Task">
         </p>   
     </div>
+  
+<div id ="search_filter">
+        <p>
+                Search By :                
+                <select id="search_by" onchange="selected_searchItem()">
+                        <option value="Category">Category</option>
+                        <option value="Start_date">Start_date</option>
+                        <option value="End_date">End_date</option>
+                        <option value="Status">Status</option>
+                </select> 
 
+
+        </p>
+
+        <p id ="searchby_category">
+                Category :
+                <select id="category_search">
+                        <option value="Linux">Linux</option>
+                        <option value="Networking">Networking</option>
+                        <option value="Docker">Docker</option>
+                        <option value="Kubernetes">Kubernetes</option>
+                </select> 
+        </p>
+    </div>
+        <div id ="searchby_StartDate">
+                Start Date : <input type="date" id ="startdate_search" />
+        </div>
+
+        <p id ="searchby_EndDate">
+                End Date : <input type="date" id ="enddate_search" />
+        </p>
+
+        <p id ="searchby_status">
+                Status : 
+                <select id="status_search">
+                    <option value="To-Do">To-Do</option>
+                    <option value="In-Progress">In-Progress</option>
+                    <option value="Done">Done</option>
+                </select>
+        </p>
+  
     <div id ="content">
         <h2>My To Do List</h2>
         <table id ="todolist" border="2">
@@ -109,6 +149,7 @@
             }
     </script>
 
+    <script src ="to-do-mainpage.js" ></script>
     <script src ="logout.js" ></script>
     <script src ="records.js" ></script>
     <script src ="validation.js" ></script>
