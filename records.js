@@ -340,43 +340,62 @@ function todo_Update(Update_id)
 
 
 
-// function createRadioButton(name)
-// {
-                
-//     let radio_button_yes = document.createElement("INPUT");
-//     radio_button_yes.setAttribute("type", "radio");
-//     radio_button_yes.setAttribute("name", name);
-
-//     let radio_button_no = document.createElement("INPUT");
-//     radio_button_no.setAttribute("type", "radio");
-//     radio_button_no.setAttribute("name", name);
-
-//     let td = document.createElement("TD");
+function to_do_search()
+{
     
-//     let td_data_yes = document.createTextNode("Yes");
-//     td.appendChild(td_data_yes);
-//     td.appendChild(radio_button_yes);
+    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    let to_do_list = [];
+    to_do_list = get_userData.todo;
+    let todoid;
 
-//     let td_data_no = document.createTextNode("No");
-//     td.appendChild(td_data_no);
-//     td.appendChild(radio_button_no);
-
-//     document.getElementById("todolist").appendChild(td);           
-
-//     return 0;
+    let searchby = document.getElementById("search_by").value;
+    let selected_data;
     
-// }
+    if(searchby === "Category")
+    {
+        selected_data = document.getElementById("category_search").value;
+    }
+    if(searchby === "Start_date")
+    {
+        selected_data = document.getElementById("startdate_search").value;
+    }
+    if(searchby === "End_date")
+    {
+        selected_data = document.getElementById("enddate_search").value;
+    }
+    if(searchby === "Status")
+    {
+        selected_data = document.getElementById("status_search").value;
+    }
 
-// function createCalender()
-// {
-//     let calender = document.createElement("INPUT");
-//     calender.setAttribute("type", "date");
+    for(key in to_do_list)
+    {        
+        if(to_do_list.hasOwnProperty(key) ){
+           
+            let data = [];
+            data = Object.values(to_do_list[key]);
+            let tr = document.createElement("TR");
+            document.getElementById("todolist").appendChild(tr);
+            todoid = data[9]; 
 
-//     let td = document.createElement("TD");
-//     td.appendChild(calender);
+            if(data[4] === "selected_data")
+            {
 
-//     document.getElementById("todolist").appendChild(td);           
+                for(let key2 in data)
+                {        
+                    if (key2 > 7)
+                        break; 
+                    if(data.hasOwnProperty(key2) ){  
+                        
+                        let td = document.createElement("TD");
+                        let td_data = document.createTextNode(data[key2]);
+                        td.appendChild(td_data);
+                        document.getElementById("todolist").appendChild(td);
+                    }
+                }
+            }                      
+        }      
+        
+    } 
 
-//     return 0;
-
-// }
+}
