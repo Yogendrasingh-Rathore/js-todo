@@ -1,5 +1,7 @@
 (function () {
     selected_searchItem();
+    document.getElementById("status_section").style.display = "none";
+    document.getElementById("search_list").style.display = "none";
 })();
 
 function selected_searchItem()

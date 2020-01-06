@@ -50,7 +50,7 @@
         let Update_id = 'Update' + todoid;
         let EditMode_id = 'EditMode' + todoid;
         
-        createButton(Update_id,Delete_id,EditMode_id);
+        createButton(Update_id,Delete_id,EditMode_id,"todolist");
         
     } 
 
@@ -169,7 +169,7 @@ function to_do()
 
 
 
-function createButton(Update_id,Delete_id,EditMode_id)
+function createButton(Update_id,Delete_id,EditMode_id,flag)
 {
     
     let button_Update = document.createElement("INPUT");
@@ -195,13 +195,23 @@ function createButton(Update_id,Delete_id,EditMode_id)
     td.appendChild(button_Update);
     td.appendChild(button_Delete);
 
-    document.getElementById("todolist").appendChild(td);           
+    if(flag == "todolist")
+    {
+        document.getElementById("todolist").appendChild(td);           
+    }
+    else
+    {
+        document.getElementById("search_list").appendChild(td);           
+    }
 
     return 0;
 }
 
 function todo_EditMode(EditMode_id)
 {
+    document.getElementById("status_section").style.display = "block";
+    document.getElementById("Add_Task").style.display = "none";
+
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
 
     let to_do_list = [];
@@ -342,7 +352,9 @@ function todo_Update(Update_id)
 
 function to_do_search()
 {
-    
+    document.getElementById("todolist").style.display = "none";
+    document.getElementById("search_list").style.display = "block";
+
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
     to_do_list = get_userData.todo;
@@ -350,22 +362,27 @@ function to_do_search()
 
     let searchby = document.getElementById("search_by").value;
     let selected_data;
+    let flag;
     
     if(searchby === "Category")
     {
         selected_data = document.getElementById("category_search").value;
+        flag = "Category";
     }
     if(searchby === "Start_date")
     {
         selected_data = document.getElementById("startdate_search").value;
+        flag = "Start_date";
     }
     if(searchby === "End_date")
     {
         selected_data = document.getElementById("enddate_search").value;
+        flag = "End_date";
     }
     if(searchby === "Status")
     {
         selected_data = document.getElementById("status_search").value;
+        flag = "Status";
     }
 
     for(key in to_do_list)
@@ -375,27 +392,122 @@ function to_do_search()
             let data = [];
             data = Object.values(to_do_list[key]);
             let tr = document.createElement("TR");
-            document.getElementById("todolist").appendChild(tr);
+            document.getElementById("search_list").appendChild(tr);
             todoid = data[9]; 
-
-            if(data[4] === "selected_data")
-            {
-
-                for(let key2 in data)
-                {        
-                    if (key2 > 7)
-                        break; 
-                    if(data.hasOwnProperty(key2) ){  
+            
+            switch(flag) {
+                case "Category":
+                    if(data[0] === selected_data)
+                    {
+                        alert(selected_data);
+                        for(let key2 in data)
+                        {        
+                            if (key2 > 7)
+                                break; 
+                            if(data.hasOwnProperty(key2) ){  
+                                
+                                let td = document.createElement("TD");
+                                let td_data = document.createTextNode(data[key2]);
+                                td.appendChild(td_data);
+                                document.getElementById("search_list").appendChild(td);
+                            }
+                        }
+                        let Delete_id = 'Delete' + todoid;
+                        let Update_id = 'Update' + todoid;
+                        let EditMode_id = 'EditMode' + todoid;
                         
-                        let td = document.createElement("TD");
-                        let td_data = document.createTextNode(data[key2]);
-                        td.appendChild(td_data);
-                        document.getElementById("todolist").appendChild(td);
-                    }
-                }
-            }                      
-        }      
+                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
+                    }                      
+                
+                break;
+                
+                case "Start_date":
+                    if(data[2] === selected_data)
+                    {
+                        alert(selected_data);
+                        for(let key2 in data)
+                        {        
+                            if (key2 > 7)
+                                break; 
+                            if(data.hasOwnProperty(key2) ){  
+                                
+                                let td = document.createElement("TD");
+                                let td_data = document.createTextNode(data[key2]);
+                                td.appendChild(td_data);
+                                document.getElementById("search_list").appendChild(td);
+                            }
+                        }
+
+                        let Delete_id = 'Delete' + todoid;
+                        let Update_id = 'Update' + todoid;
+                        let EditMode_id = 'EditMode' + todoid;
+                        
+                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
+                    }                      
+                
+                break;
+                
+                case "End_date":
+                    if(data[3] === selected_data)
+                    {
+                        alert(selected_data);
+                        for(let key2 in data)
+                        {        
+                            if (key2 > 7)
+                                break; 
+                            if(data.hasOwnProperty(key2) ){  
+                                
+                                let td = document.createElement("TD");
+                                let td_data = document.createTextNode(data[key2]);
+                                td.appendChild(td_data);
+                                document.getElementById("search_list").appendChild(td);
+                            }
+                        }
+
+                        let Delete_id = 'Delete' + todoid;
+                        let Update_id = 'Update' + todoid;
+                        let EditMode_id = 'EditMode' + todoid;
+                        
+                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
+                    }                      
+                
+                break;
+                
+                case "Status":
+                    if(data[4] === selected_data)
+                    {
+                        alert(selected_data);
+                        for(let key2 in data)
+                        {        
+                            if (key2 > 7)
+                                break; 
+                            if(data.hasOwnProperty(key2) ){  
+                                
+                                let td = document.createElement("TD");
+                                let td_data = document.createTextNode(data[key2]);
+                                td.appendChild(td_data);
+                                document.getElementById("search_list").appendChild(td);
+                            }
+                        }
+
+                        let Delete_id = 'Delete' + todoid;
+                        let Update_id = 'Update' + todoid;
+                        let EditMode_id = 'EditMode' + todoid;
+                        
+                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
+                    }                      
+                
+                break;
+                
+                  default: alert("Default Section");  
+                  
+              }    
         
-    } 
+
+        }    
+        
+        
+    }   
+
 
 }
