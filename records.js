@@ -8,8 +8,7 @@
     let todoid;
 
     let profile_image = document.getElementById("profile_image");
-    let pic_address = get_userData['userImage'];
-    
+    let pic_address = get_userData['userImage'];   
     
     profile_image.innerHTML = profile_image.setAttribute("src",pic_address);
 
@@ -58,12 +57,15 @@
 
 function profile_data()
 {
-var userName = document.getElementById("r_uname").value;
-var password = document.getElementById("r_password").value;
-var gender = document.getElementById("gender").value;
-var email = document.getElementById("email").value;
-var address = document.getElementById("address").value;
-var profile_pic = document.getElementById("profile_pic").value;
+let userName = document.getElementById("r_uname").value;
+let password = document.getElementById("r_password").value;
+let gender = document.getElementById("gender").value;
+let email = document.getElementById("email").value;
+let address = document.getElementById("address").value;
+let profile_pic = document.getElementById("profile_pic").value;
+let category = [];
+
+let profile_pic_src = profile_pic.split("fakepath\\");
 
     if (typeof(Storage) !== "undefined") {
 
@@ -97,7 +99,8 @@ var profile_pic = document.getElementById("profile_pic").value;
                 password : password,
                 gender : gender,
                 address : address,
-                userImage : profile_pic
+                userImage : profile_pic_src[1],
+                Category : category
                 };
 
                     obj.todo = [];
@@ -147,6 +150,7 @@ function to_do()
         let isReminder_date = document.getElementById("isReminder_date").value;
         let isPublic = document.getElementById("isPublic").value;
 
+
         obj = {
             category : category,
             task : task,
@@ -191,6 +195,7 @@ function createButton(Update_id,Delete_id,EditMode_id,flag)
     button_Update.setAttribute("type", "button");
     button_Update.setAttribute("value", "Update");
     button_Update.setAttribute("id", Update_id);
+    button_Update.setAttribute("hidden", true);
     button_Update.setAttribute("onclick", "todo_Update(this.id)");
 
     let button_Delete = document.createElement("INPUT");
@@ -216,7 +221,7 @@ function createButton(Update_id,Delete_id,EditMode_id,flag)
     }
     else
     {
-        document.getElementById("search_list").appendChild(td);           
+        document.getElementById("search_list").appendChild(td);         
     }
 
     return 0;
@@ -227,13 +232,22 @@ function todo_EditMode(EditMode_id)
     document.getElementById("status_section").style.display = "block";
     document.getElementById("Add_Task").style.display = "none";
 
+    let size = EditMode_id.length;
+    let user_to_id = EditMode_id.charAt(size-1);
+
+    let Update_id = 'Update' + user_to_id;
+
+    document.getElementById(Update_id).style.display = "block";
+
+    // let td = document.createElement("TD");
+    // let td_data = document.createTextNode(data[key2]);
+    // td.appendChild(td_data);
+    // document.getElementById("search_list").appendChild(td)
+
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
 
     let to_do_list = [];
-    to_do_list = get_userData.todo;
-
-    let size = EditMode_id.length;
-    let user_to_id = EditMode_id.charAt(size-1);
+    to_do_list = get_userData.todo;    
 
     for(key in to_do_list)
     {        
@@ -241,8 +255,7 @@ function todo_EditMode(EditMode_id)
            
             let data = [];
             data = Object.values(to_do_list[key]);
-            alert(EditMode_id);
-            alert(data);
+
             if(data[9] == user_to_id)
             {
                 
@@ -415,7 +428,7 @@ function to_do_search()
                 case "Category":
                     if(data[0] === selected_data)
                     {
-                        alert(selected_data);
+                        
                         for(let key2 in data)
                         {        
                             if (key2 > 7)
@@ -433,6 +446,7 @@ function to_do_search()
                         let EditMode_id = 'EditMode' + todoid;
                         
                         createButton(Update_id,Delete_id,EditMode_id,"search_list");
+                        
                     }                      
                 
                 break;
@@ -440,7 +454,7 @@ function to_do_search()
                 case "Start_date":
                     if(data[2] === selected_data)
                     {
-                        alert(selected_data);
+                        
                         for(let key2 in data)
                         {        
                             if (key2 > 7)
@@ -466,7 +480,7 @@ function to_do_search()
                 case "End_date":
                     if(data[3] === selected_data)
                     {
-                        alert(selected_data);
+                        
                         for(let key2 in data)
                         {        
                             if (key2 > 7)
@@ -492,7 +506,7 @@ function to_do_search()
                 case "Status":
                     if(data[4] === selected_data)
                     {
-                        alert(selected_data);
+                        
                         for(let key2 in data)
                         {        
                             if (key2 > 7)
@@ -524,7 +538,7 @@ function to_do_search()
         
         
     }   
-
+    cleanup();
 
 }
 

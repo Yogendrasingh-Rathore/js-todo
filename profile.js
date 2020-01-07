@@ -32,7 +32,6 @@
     
     let pic_address = get_userData['userImage'];
     profile_pic.innerHTML = profile_pic.setAttribute("src",pic_address);
-
     
 })();
 
@@ -134,7 +133,10 @@ function profile_update()
     
     get_userData.email = document.getElementById("email").value;
     get_userData.address = document.getElementById("address").value;
-    get_userData.userImage = document.getElementById("profile_pic").value;
+    
+    let profile_pic = document.getElementById("profile_pic").value;
+    let profile_pic_src = profile_pic.split("fakepath\\");
+    get_userData.userImage = profile_pic_src[1];
 
     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));     
         

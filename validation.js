@@ -68,13 +68,13 @@ function date_validation()
             document.getElementById("start_date").value = "";
     }
 
-    let ToDate = new Date();
+    // let ToDate = new Date();
 
-    if (new Date(startDate).getTime() <= ToDate.getTime() || new Date(endDate).getTime() <= ToDate.getTime()) {
-          alert("The Date must be Bigger or Equal to today date");
-          document.getElementById("end_date").value = "";
-          document.getElementById("start_date").value = "";
-     }
+    // if (new Date(startDate).getTime() <= ToDate.getTime() || new Date(endDate).getTime() <= ToDate.getTime()) {
+    //       alert("The Date must be Bigger or Equal to today date");
+    //       document.getElementById("end_date").value = "";
+    //       document.getElementById("start_date").value = "";
+    //  }
 
 }
 

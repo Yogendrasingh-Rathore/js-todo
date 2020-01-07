@@ -2,6 +2,9 @@
     selected_searchItem();
     document.getElementById("status_section").style.display = "none";
     document.getElementById("search_list").style.display = "none";
+    let source = document.getElementById("profile_image").files[0].name; 
+    alert(source);
+    document.getElementById("profile_image").setAttribute("src",source);
 })();
 
 function selected_searchItem()
