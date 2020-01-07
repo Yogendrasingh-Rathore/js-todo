@@ -128,42 +128,57 @@ var profile_pic = document.getElementById("profile_pic").value;
 
 function to_do()
 {
-    let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    let flag = to_do_validation();
 
-    let e = document.getElementById("category");
-    let category = e.options[e.selectedIndex].value;
+    if(flag == 0)
+    {
+        let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
 
-    let s = document.getElementById("status");
-    let status = s.options[s.selectedIndex].value;
+        let e = document.getElementById("category");
+        let category = e.options[e.selectedIndex].value;
 
-    let start_date = document.getElementById("start_date").value;
-    let end_date = document.getElementById("end_date").value;
-    let task = document.getElementById("task").value;
-    let isReminder = document.getElementById("isReminder").value;
-    let isReminder_date = document.getElementById("isReminder_date").value;
-    let isPublic = document.getElementById("isPublic").value;
+        // let s = document.getElementById("status");
+        // let status = s.options[s.selectedIndex].value;
 
-    obj = {
-        category : category,
-        task : task,
-        start_date : start_date,
-        end_date : end_date,
-        status : status,
-        isReminder : isReminder,
-        isReminder_date : isReminder_date,
-        isPublic : isPublic
-    };
-    
-    obj.user = sessionStorage.getItem('activeUser');
+        let start_date = document.getElementById("start_date").value;
+        let end_date = document.getElementById("end_date").value;
+        let task = document.getElementById("task").value;
+        let isReminder = document.getElementById("isReminder").value;
+        let isReminder_date = document.getElementById("isReminder_date").value;
+        let isPublic = document.getElementById("isPublic").value;
+
+        obj = {
+            category : category,
+            task : task,
+            start_date : start_date,
+            end_date : end_date,
+            status : "To-Do",
+            isReminder : isReminder,
+            isReminder_date : isReminder_date,
+            isPublic : isPublic
+        };
         
-    userData.toDoId++;
-    obj.id = userData.toDoId;
+        obj.user = sessionStorage.getItem('activeUser');
+            
+        userData.toDoId++;
+        obj.id = userData.toDoId;
 
-    userData.todo.push(obj);
+        userData.todo.push(obj);
 
-    localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(userData));     
-    
-    location.reload();
+        localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(userData));     
+        
+        location.reload();
+
+        cleanup();
+    }
+    else if(flag == 1)
+    {
+        alert("Cannot Add To-Do, Must have Start and End Date");
+    }
+    else
+    {
+        alert("Cannot Add To-Do, Must Set the Reminder Date!");
+    }
 }
 
 
@@ -344,16 +359,17 @@ function todo_Update(Update_id)
     get_userData.todo = to_do_list;
 
     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));     
-    
+   
+    cleanup();
     location.reload();
 }
-
-
 
 function to_do_search()
 {
     document.getElementById("todolist").style.display = "none";
     document.getElementById("search_list").style.display = "block";
+
+    empty_table();
 
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
@@ -510,4 +526,50 @@ function to_do_search()
     }   
 
 
+}
+
+
+function empty_table()
+{
+    let Parent = document.getElementById("search_list");
+    while(Parent.hasChildNodes())
+    {
+       Parent.removeChild(Parent.firstChild);
+    }
+
+    // for(var i = table.rows.length - 1; i > 0; i--)
+    // {
+    //     table.deleteRow(i);
+    // }
+}
+
+function cleanup()
+{
+
+    document.getElementById("end_date").value = "";
+    document.getElementById("start_date").value = "";
+    document.getElementById("isReminder_date").value = "";
+    document.getElementById("task").value = "";
+}
+
+function to_do_validation()
+{
+    let start_date = document.getElementById("start_date").value;
+    let end_date = document.getElementById("end_date").value;
+    let flag = 0;
+
+    if(start_date=="" || end_date=="")
+    {
+        flag = 1;
+    }
+
+    let isReminder = document.getElementById("isReminder").value;
+    let isReminder_date = document.getElementById("isReminder_date").value;
+
+    if(isReminder =="Yes" && isReminder_date =="")
+    {
+        flag = 2;
+    }
+
+    return flag;
 }
