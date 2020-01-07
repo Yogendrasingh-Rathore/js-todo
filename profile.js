@@ -55,16 +55,15 @@ function profile_validation()
     let get_userData = {};
     get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
  
-    if(old_password !== get_userData['password'])
+    if(old_password != "" && old_password !== get_userData['password'])
     {
-        alert("Incorrect Old Password");
-        flag = 0;
+            alert("Incorrect Old Password");
+            flag = 0;
     }
-
     
     let patt_password =/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
     
-    if(!patt_password.test(new_password))
+    if(new_password != "" && !patt_password.test(new_password))
     {
         alert("Invalid Password, Must have minimum length 6, 1 lowercase, 1 uppercase, 1 digit, 1 special char");
         flag = 0;
@@ -106,12 +105,36 @@ function profile_update()
 {
     let get_userData = {};
     get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    let gender_male = document.getElementById("gender_male");
+    let gender_female = document.getElementById("gender_female");
+    let new_password = document.getElementById("new_password").value;
 
-    get_userData['password'] = document.getElementById("new_password").value;
-    get_userData['gender'] = document.getElementsByName("gender").value;
-    get_userData['email'] = document.getElementById("email").value;
-    get_userData['address'] = document.getElementById("address").value;
-    get_userData['userImage'] = document.getElementById("profile_pic").value;
+    if(new_password != "")
+    {
+        get_userData.password = document.getElementById("new_password").value;
+    }
+    else
+    {
+        get_userData.password = get_userData.password;
+    }
+
+    if( gender_male.checked == true)
+    {
+        get_userData.gender = document.getElementById("gender_male").value;
+    }
+    else if(gender_female.checked == true)
+    {
+        get_userData.gender = document.getElementById("gender_female").value;
+    }
+    else
+    {
+        get_userData.gender = document.getElementById("gender_other").value;
+    }
+
+    
+    get_userData.email = document.getElementById("email").value;
+    get_userData.address = document.getElementById("address").value;
+    get_userData.userImage = document.getElementById("profile_pic").value;
 
     localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));     
         
