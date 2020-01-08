@@ -2,9 +2,8 @@
  <head>
      <meta charset="utf-8"/>
      <title> To Do App </title>
-
 </head>
-<body>
+<body background="bck2.jpg">
     <div id ="header">
         
             <h2>Welcome <span id ="activeUser"></span> </h2>
@@ -50,15 +49,15 @@
                 <tr>
                     <th>isReminder</th>
                     <td>
-                        <input type="radio" id="isReminder" name="isReminder" value="Yes"> Yes
-                        <input type="radio" id="isReminder" name="isReminder" value="No"> No
+                        <input type="radio" id="isReminder_yes" name="isReminder" value="Yes"> Yes
+                        <input type="radio" id="isReminder_no" name="isReminder" value="No"> No
                     </td>
                     <th>Reminder Date :</th>
                     <td><input type="date" id="isReminder_date" onchange="isReminderdate()"><br><br></td>
                     <th>isPublic</th>
                     <td>
-                        <input type="radio" id="isPublic" name="isPublic" value="Yes"> Yes
-                        <input type="radio" id="isPublic" name="isPublic" value="No"> No</td>
+                        <input type="radio" id="isPublic_yes" name="isPublic" value="Yes"> Yes
+                        <input type="radio" id="isPublic_no" name="isPublic" value="No"> No</td>
                 </tr>
             </table>
             
@@ -81,10 +80,7 @@
         <p id ="searchby_category">
                 Category :
                 <select id="category_search">
-                        <option value="Linux">Linux</option>
-                        <option value="Networking">Networking</option>
-                        <option value="Docker">Docker</option>
-                        <option value="Kubernetes">Kubernetes</option>
+                       
                 </select> 
         </p>
     </div>

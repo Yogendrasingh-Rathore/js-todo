@@ -2,9 +2,29 @@
     selected_searchItem();
     document.getElementById("status_section").style.display = "none";
     document.getElementById("search_list").style.display = "none";
-    let source = document.getElementById("profile_image").files[0].name; 
-    alert(source);
-    document.getElementById("profile_image").setAttribute("src",source);
+    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    
+    for(key in get_userData.Category)
+    {        
+            let sel = document.getElementById('category');
+            let opt = document.createElement('option');
+            
+            opt.text = opt.value = get_userData.Category[key]; 
+            sel.add(opt, key); 
+ 
+    }
+
+    for(key in get_userData.Category)
+    {        
+            let sel = document.getElementById('category_search');
+            let opt = document.createElement('option');
+            
+            opt.text = opt.value = get_userData.Category[key]; 
+            sel.add(opt, key); 
+ 
+    }
+
+
 })();
 
 function selected_searchItem()
@@ -17,6 +37,8 @@ function selected_searchItem()
         document.getElementById("searchby_EndDate").style.display = "none";
         document.getElementById("searchby_status").style.display = "none";
         document.getElementById("searchby_category").style.display = "block";
+    
+
     }
     else if(selected_item === "Start_date")
     {
@@ -49,11 +71,26 @@ document.getElementById("time_date").innerHTML = display_date;
 function add_category()
 {
     let category_name = document.getElementById('category_name').value;
-    let sel = document.getElementById('category');
 
-    let opt = document.createElement('option');
+    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    get_userData.Category.push(category_name);  
 
-    opt.appendChild( document.createTextNode(category_name) );
-    opt.value = category_name; 
-    sel.appendChild(opt); 
+    localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));     
+
+    let get_userData2 = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    
+    for(key in get_userData2.Category)
+    {        
+            let sel = document.getElementById('category');
+            let opt = document.createElement('option');            
+            
+            opt.text = opt.value = get_userData2.Category[key]; 
+            sel.add(opt, key); 
+    }
+
+    alert(category_name + "  Added");
+    
+    cleanup();
+    location.reload();
+
 }
