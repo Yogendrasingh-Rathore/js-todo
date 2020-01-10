@@ -1,5 +1,10 @@
 (function () {
 
+    if(!sessionStorage.getItem('activeUser'))
+    {
+        location.replace("homepage.html");
+    }
+    
     let d = new Date();
     let display_date = ''+ d.getDate() +'/'+ (d.getMonth()+1) + '/'+d.getFullYear();
     document.getElementById("time_date").innerHTML = display_date;    

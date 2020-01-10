@@ -1,8 +1,13 @@
 (function ()
 {   
+    if(!sessionStorage.getItem('activeUser'))
+    {
+        location.replace("homepage.html");
+    }
+
     let get_userData = {};
     get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
- 
+
     let userName = document.getElementById("userName");
     let gender_male = document.getElementById("gender_male");
     let gender_female = document.getElementById("gender_female");

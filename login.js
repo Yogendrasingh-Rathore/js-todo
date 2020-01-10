@@ -2,9 +2,12 @@ function auth()
 {
     var uname = document.getElementById("l_uname").value;
     var password = document.getElementById("l_password").value;
-    let obj = JSON.parse(localStorage.getItem('users')) || [];
-    let val = [];
-    val = obj.userNames;
+    let obj = JSON.parse(localStorage.getItem('users')) || {};
+    let username = [];
+    username = obj.userNames;
+    let email = [];
+    email = obj.emailId;
+    let flag=0;
 
     if(uname == "" || password == "")
     {
@@ -12,30 +15,31 @@ function auth()
         location.href = 'homepage.html';
     }
 
-    for(let key in val)
-    {
-        
-        if(val.hasOwnProperty(key) ){
-            
-            if(val[key] == uname )
+    for(let key in username)
+    {              
+            if(username[key] == uname || email[key] == uname)
             {
                 let userDetails = JSON.parse(localStorage.getItem(obj.userNames[key]));
 
                 if(userDetails){
                     if(userDetails.password == password){
                         sessionStorage.setItem('activeUser',obj.userNames[key]);
-                        location.assign('to-do-mainpage.html');
+                        location.replace('to-do-mainpage.html');
+                        flag=1;
                         break;
                     }else{
                         alert("Incorrect Password");
                     } 
                }
-               else{
-                   alert("No such user ... Please Sign Up!");
-                   location.href = 'homepage.html';
-               }
+               
             }
-        }
+    }
+
+
+    if(flag ==0)
+    {
+        alert("Invalid Credentials");
+        location.href = 'homepage.html';
     }
 
 }

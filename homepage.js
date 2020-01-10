@@ -1,15 +1,20 @@
 (function () {
     document.getElementById("login").style.display = "none"; 
+    document.getElementById("register_btn").style.display = "none"; 
     document.getElementById("register").style.display = "block";
 })();
 
 function login_fn() {    
-    document.getElementById("register").style.display = "none";           
+    document.getElementById("register").style.display = "none";     
+    document.getElementById("login_btn").style.display = "none";
+    document.getElementById("register_btn").style.display = "block";       
     document.getElementById("login").style.display = "block"; 
 }
 
 function register_fn() {          
     document.getElementById("login").style.display = "none"; 
+    document.getElementById("login_btn").style.display = "block";
+    document.getElementById("register_btn").style.display = "none";
     document.getElementById("register").style.display = "block";
 }
 
@@ -19,12 +24,14 @@ function validation()
     let password = document.getElementById("r_password").value;
     let uname = document.getElementById("r_uname").value;
     let cpassword = document.getElementById("r_cpassword").value;
-    let gender = document.getElementById("gender").value;
+    let gender_male = document.getElementById("gender_male");
+    let gender_female = document.getElementById("gender_female");
+    let gender_other = document.getElementById("gender_other");
     let email = document.getElementById("email").value;
     let address = document.getElementById("address").value;
     let profile_pic = document.getElementById("profile_pic").value;
 
-    if(uname == "" || password == "" || cpassword == "" || gender == "" || email == "" || address == "" || profile_pic == "")
+    if(uname == "" || password == "" || cpassword == "" || email == "" || address == "" || profile_pic == "")
     {
         alert("Fields cannot be left blank!");
         location.href = 'homepage.html';
@@ -34,7 +41,7 @@ function validation()
 
     if(!patt_uname.test(uname))
     {
-        alert("Only Alphabets are allowed!");
+        alert("UserName must have Alphabets!");
         flag = 0;
     }
 
@@ -52,7 +59,7 @@ function validation()
         flag = 0;
     }
   
-    if( gender[0].checked == false || gender[1].checked == false || gender[2].checked == false)
+    if(gender_male.checked == false && gender_female.checked == false && gender_other.checked == false)
     {
         alert("Please select the gender!");
         flag = 0;
@@ -82,11 +89,13 @@ function profile_data()
 {
 let userName = document.getElementById("r_uname").value;
 let password = document.getElementById("r_password").value;
-let gender = document.getElementById("gender").value;
+let gender_male = document.getElementById("gender_male");
+let gender_female = document.getElementById("gender_female");
 let email = document.getElementById("email").value;
 let address = document.getElementById("address").value;
 let profile_pic = document.getElementById("profile_pic").value;
 let category = [];
+let gender;
 
 let profile_pic_src = profile_pic.split("fakepath\\");
 
@@ -94,28 +103,45 @@ let profile_pic_src = profile_pic.split("fakepath\\");
 
         let loadUserData = () => JSON.parse(localStorage.getItem('users'))||[];
 
-        let obj1 = JSON.parse(localStorage.getItem('users')) || [];
+        let obj1 = JSON.parse(localStorage.getItem('users')) || {};
         let val = [];
         val = obj1.userNames;
+        let emailid = [];
+        emailid = obj1.emailId;
         let flag = 1;
 
         for(let key in val)
-        {
-           
-            if(val.hasOwnProperty(key) ){
-              
-                if(val[key] == userName )
+        {                       
+                if(val[key] == userName)
                 {
-                    let userDetails = JSON.parse(localStorage.getItem(obj1.userNames[key]));
-                    alert(val[key] + "  UserName Already Exists!");
+                    alert(val[key] + "  UserName Already Exists!\n Account Not Created");
                     flag = 0;
                     break;                    
                 }
-            }
+                
+                if(emailid[key] == email)
+                {
+                    alert(emailid[key] + "  Email Already Exists!\n Account Not Created");
+                    flag = 0;
+                    break;                    
+                }
+            
         }
 
         if(flag!=0)
         {
+
+            if(gender_male.checked = true)
+            {
+                gender = "male";
+            }else if(gender_female.checked = true)
+            {
+                gender ="female";
+            }
+            else{
+                gender = "other";
+            }
+
             let obj = {
                 userName : userName,
                 email : email,
@@ -133,7 +159,6 @@ let profile_pic_src = profile_pic.split("fakepath\\");
                     if(users == ""){
                             userData.userNames = [userName];
                             userData.emailId = [email];
-                            alert();
                             localStorage.setItem('users', JSON.stringify(userData));
                     }else{
                         users.userNames.push(obj.userName);

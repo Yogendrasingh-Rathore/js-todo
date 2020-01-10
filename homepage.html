@@ -12,9 +12,9 @@
         <hr>
 
         <div id="login_div">
-            <input type="submit" value="Login" id="login_btn" onclick="login_fn()" style="float: right;"/>
+            <input type="button" value="Login" id="login_btn" onclick="login_fn()" style="float: right;"/>
             &nbsp;&nbsp;&nbsp;
-            <input type="submit" value="Create Your Account" id="register_btn" onclick="register_fn()" style="float: right;">
+            <input type="button" value="Create Your Account" id="register_btn" onclick="register_fn()" style="float: right;">
         </div>
 
         <br>
@@ -41,9 +41,12 @@
                         </tr>
                         <tr>
                             <th> Gender : </th>
-                            <td> <input type="radio" name="gender" value="male" id="gender"> Male 
-                                <input type="radio" name="gender" value="female" id="gender"> Female
-                                <input type="radio" name="gender" value="other" id="gender"> Other
+                            <td> <input type="radio" name="gender" value="male" id="gender_male"> 
+                                <label for="gender_male">Male</label> 
+                                <input type="radio" name="gender" value="female" id="gender_female">
+                                <label for="gender_female">Female</label>
+                                <input type="radio" name="gender" value="other" id="gender_other">
+                                <label for="gender_other">Other</label>
                             </td>
                         </tr>
                         <tr>
@@ -61,7 +64,7 @@
                         </tr>
 
                         <tr>
-                            <td> <input type="button" value="Register" id="Register" onclick="validation()"/> </td>
+                            <td> <input type="submit" value="Register" id="Register" onclick="validation()"/> </td>
                             <td> <input type="reset"> </td>
                         </tr>
 
