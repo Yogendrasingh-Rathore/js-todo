@@ -55,80 +55,6 @@
 
 })();
 
-function profile_data()
-{
-let userName = document.getElementById("r_uname").value;
-let password = document.getElementById("r_password").value;
-let gender = document.getElementById("gender").value;
-let email = document.getElementById("email").value;
-let address = document.getElementById("address").value;
-let profile_pic = document.getElementById("profile_pic").value;
-let category = [];
-
-let profile_pic_src = profile_pic.split("fakepath\\");
-
-    if (typeof(Storage) !== "undefined") {
-
-        let loadUserData = () => JSON.parse(localStorage.getItem('users'))||[];
-
-        let obj1 = JSON.parse(localStorage.getItem('users')) || [];
-        let val = [];
-        val = obj1.userNames;
-        let flag = 1;
-
-        for(let key in val)
-        {
-           
-            if(val.hasOwnProperty(key) ){
-              
-                if(val[key] == uname )
-                {
-                    let userDetails = JSON.parse(localStorage.getItem(obj1.userNames[key]));
-                    alert(val[key] + "  UserName Already Exists!");
-                    flag = 0;
-                    break;                    
-                }
-            }
-        }
-
-        if(flag!=0)
-        {
-            let obj = {
-                userName : userName,
-                email : email,
-                password : password,
-                gender : gender,
-                address : address,
-                userImage : profile_pic_src[1],
-                Category : category
-                };
-
-                    obj.todo = [];
-                    obj.toDoId = 0;
-                    let users = loadUserData();
-                    let userData = {};
-                    if(users == ""){
-                            userData.userNames = [userName];
-                            userData.emailId = [email];
-                            alert();
-                            localStorage.setItem('users', JSON.stringify(userData));
-                    }else{
-                        users.userNames.push(obj.userName);
-                        users.emailId.push(obj.email);
-                        localStorage.setItem('users', JSON.stringify(users));
-                    }
-                    localStorage.setItem(obj.userName, JSON.stringify(obj));
-                    alert("Registration Successful..");
-                    location.replace('homepage.html');
-        }
-    }
-    else
-    {
-        document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
-    }
-}
-
-
 function to_do()
 {
     let flag = reminder_validation();
@@ -193,14 +119,7 @@ function to_do()
         cleanup();
         location.reload();        
     }
-    else if(flag == 1)
-    {
-        alert("Cannot Add To-Do, Must have Start and End Date");
-    }
-    else
-    {
-        alert("Cannot Add To-Do, Must Set the Reminder Date!");
-    }
+   
 }
 
 
@@ -442,15 +361,7 @@ function todo_Update(Update_id)
         cleanup();
         location.reload();
     }
-    else if(flag == 1)
-    {
-        alert("Cannot Update To-Do, Must have Start and End Date");
-    }
-    else
-    {
-        alert("Cannot Update To-Do, Must Set the Reminder Date!");
-    }
-
+    
 }
 
 function to_do_search()
@@ -632,16 +543,33 @@ function cleanup()
     document.getElementById("task").value = "";
 }
 
+function date_validation()
+{
+    let startDate = document.getElementById("start_date").value;
+    let endDate = document.getElementById("end_date").value;
+
+    if ((Date.parse(startDate) >= Date.parse(endDate))) {
+            alert("End date should be greater than Start date");
+            document.getElementById("end_date").value = "";
+            document.getElementById("start_date").value = "";
+    }
+
+}
+
 function reminder_validation()
 {
     let start_date = document.getElementById("start_date").value;
     let end_date = document.getElementById("end_date").value;
     let flag = 0;
 
-    if(start_date=="" || end_date=="")
+    if(start_date=="")
     {
         flag = 1;
     }    
+    if(end_date=="")
+    {
+        flag = 1;
+    }
         
         let isReminder_yes = document.getElementById("isReminder_yes");
         let isReminder_no = document.getElementById("isReminder_no");
@@ -649,6 +577,11 @@ function reminder_validation()
         let isPublic_yes = document.getElementById("isPublic_yes");
         let isPublic_no = document.getElementById("isPublic_no");
         let isReminder, isPublic;
+
+    if (isReminder_date < start_date || isReminder_date > end_date)
+     {
+          flag = 2;
+     }
 
         if(isReminder_yes.checked == true)
         {
@@ -670,7 +603,30 @@ function reminder_validation()
 
     if(isReminder =="Yes" && isReminder_date =="")
     {
-        flag = 2;
+        flag = 3;
+    }
+
+    if(isReminder =="No" && isReminder_date !="")
+    {
+        flag = 4;
+    }
+
+
+    switch(flag) {
+        case 1:
+            alert("Cannot Add To-Do, Must have Start and End Date");
+            break;
+        case 2:
+            alert("The Date must be between " + start_date + " and " + end_date);        
+            document.getElementById("isReminder_date").value = "";              
+            break;
+        case 3:
+            alert("Cannot Add To-Do, Must Set the Reminder Date!");
+            break;
+        case 4:
+            alert("Cannot Set Reminder Date, isReminder is Not Selected");
+            document.getElementById("isReminder_date").value = "";              
+            break;
     }
 
     return flag;

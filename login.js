@@ -1,4 +1,3 @@
-
 function auth()
 {
     var uname = document.getElementById("l_uname").value;
@@ -6,7 +5,6 @@ function auth()
     let obj = JSON.parse(localStorage.getItem('users')) || [];
     let val = [];
     val = obj.userNames;
-    // login_email = obj.emailld;
 
     if(uname == "" || password == "")
     {

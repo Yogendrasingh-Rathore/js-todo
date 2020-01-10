@@ -1,4 +1,9 @@
 (function () {
+
+    let d = new Date();
+    let display_date = ''+ d.getDate() +'/'+ (d.getMonth()+1) + '/'+d.getFullYear();
+    document.getElementById("time_date").innerHTML = display_date;    
+
     selected_searchItem();
     document.getElementById("status_section").style.display = "none";
     document.getElementById("search_list").style.display = "none";
