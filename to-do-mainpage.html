@@ -29,21 +29,29 @@
     <div id ="filter">
         <h3><u>Add New To-do Task</u></h3>
         <table border="2">
-            <tr>
+            <thead>
                 <th>Category</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Task Details</th>
+                <th id="status_columnName">Status</th>
                 <th>isReminder</th>
                 <th>Reminder Date</th>
                 <th>isPublic</th>
-            </tr>
+            </thead>
             <tr>
                 <td><select id="category"></select> </td>
                 <td><input type="date" id ="start_date" onchange="date_validation()"/></td>
                 <td><input type="date" id ="end_date" onchange="date_validation()"/></td>
                 <td>
                         <textarea rows="2" cols="30" placeholder="Enter Task Description here..." id ="task" style="resize: none;"></textarea>
+                </td>
+                <td id="status_columnData">
+                        <select id="status">
+                            <option value="To-Do">To-Do</option>
+                            <option value="In-Progress">In-Progress</option>
+                            <option value="Done">Done</option>
+                        </select>
                 </td>
                 <td><input type="radio" id="isReminder_yes" name="isReminder" value="Yes">
                     <label for="isReminder_yes">Yes</label> 
@@ -66,18 +74,7 @@
         <br>
         <input type="button" onclick="to_do()"  value ="Add Task" id="Add_Task">
         
-        <hr>
-
-        <p id ="status_section">
-                Status : 
-                <select id="status">
-                    <option value="To-Do">To-Do</option>
-                    <option value="In-Progress">In-Progress</option>
-                    <option value="Done">Done</option>
-                </select>
-            </p>
-            
-        </p>   
+        <hr>   
     </div>
   
 <div id ="search_filter">

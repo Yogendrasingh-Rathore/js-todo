@@ -10,7 +10,8 @@
     document.getElementById("time_date").innerHTML = display_date;    
 
     selected_searchItem();
-    document.getElementById("status_section").style.display = "none";
+    document.getElementById("status_columnName").style.display = "none";
+    document.getElementById("status_columnData").style.display = "none";
     document.getElementById("search_list").style.display = "none";
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     

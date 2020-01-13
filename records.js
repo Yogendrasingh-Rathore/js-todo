@@ -169,7 +169,8 @@ function todo_EditMode()
     }
     if(counter == 1)
     {
-        document.getElementById("status_section").style.display = "block";
+        document.getElementById("status_columnName").style.display = "block";
+        document.getElementById("status_columnData").style.display = "block";
         document.getElementById("Add_Task").style.display = "none";
 
         let isReminder_yes = document.getElementById("isReminder_yes");
@@ -361,9 +362,17 @@ function todo_Update()
     }
 }
 
+function table_data_appendChild(data)
+{
+    let td = document.createElement("TD");
+    let td_data = document.createTextNode(data);
+    td.appendChild(td_data);
+    document.getElementById("table_data").appendChild(td);
+}
 
 function searchby_category(to_do_list,selected_data)
 {
+    let found = "false";
     for(key in to_do_list)
     {          
             let data = [];
@@ -372,26 +381,25 @@ function searchby_category(to_do_list,selected_data)
             todoid = data[9]; 
 
                     if(data[0] === selected_data)
-                    {                  
+                    {    
+                        found = "true";
                         for(let key2 in data)
                         {        
-                            if (key2 > 7)
+                            if (key2 > 7){
                                 break; 
-                            if(data.hasOwnProperty(key2) ){  
-                                
-                                let td = document.createElement("TD");
-                                let td_data = document.createTextNode(data[key2]);
-                                td.appendChild(td_data);
-                                document.getElementById("table_data").appendChild(td);
+                            }else{
+                                table_data_appendChild(data[key2]);
                             }
                         }
                         createButton(todoid,"table_data");                       
                     }                      
     }               
+    NoRecordFound(found);
 }
 
 function searchby_startDate(to_do_list,selected_data)
 {
+    let found = "false";
     for(key in to_do_list)
     {          
             let data = [];
@@ -401,26 +409,24 @@ function searchby_startDate(to_do_list,selected_data)
 
             if(data[2] === selected_data)
             {
-                        
+                found = "true";
                 for(let key2 in data)
                 {        
-                    if (key2 > 7)
-                         break; 
-                    if(data.hasOwnProperty(key2) ){  
-                                
-                        let td = document.createElement("TD");
-                        let td_data = document.createTextNode(data[key2]);
-                        td.appendChild(td_data);
-                        document.getElementById("table_data").appendChild(td);
+                    if (key2 > 7){
+                        break; 
+                    }else{
+                        table_data_appendChild(data[key2]);
                     }
                 }
             createButton(todoid,"table_data");
             }                     
     }
+    NoRecordFound(found);
 }
 
 function searchby_endDate(to_do_list,selected_data)
 {
+    let found = "false";
     for(key in to_do_list)
     {          
         let data = [];
@@ -429,26 +435,24 @@ function searchby_endDate(to_do_list,selected_data)
         todoid = data[9]; 
             if(data[3] === selected_data)
             {
-                
+                found = "true";
                 for(let key2 in data)
                 {        
-                    if (key2 > 7)
+                    if (key2 > 7){
                         break; 
-                    if(data.hasOwnProperty(key2) ){  
-                        
-                        let td = document.createElement("TD");
-                        let td_data = document.createTextNode(data[key2]);
-                        td.appendChild(td_data);
-                        document.getElementById("table_data").appendChild(td);
+                    }else{
+                        table_data_appendChild(data[key2]);
                     }
                 }
                 createButton(todoid,"table_data");
             } 
     }  
+    NoRecordFound(found);
 }
 
 function searchby_status(to_do_list,selected_data)
 {
+    let found = "false";
     for(key in to_do_list)
     {          
         let data = [];
@@ -457,48 +461,56 @@ function searchby_status(to_do_list,selected_data)
         todoid = data[9];
         if(data[4] === selected_data)
         {
-                        
+            found = "true";
             for(let key2 in data)
             {        
-                if (key2 > 7)
-                break; 
-                if(data.hasOwnProperty(key2) ){  
-                                
-                let td = document.createElement("TD");
-                let td_data = document.createTextNode(data[key2]);
-                td.appendChild(td_data);
-                document.getElementById("table_data").appendChild(td);
+                if (key2 > 7){
+                    break; 
+                }else{
+                    table_data_appendChild(data[key2]);
                 }
             }
             createButton(todoid,"table_data");
         }                      
     }
+    NoRecordFound(found);
 }
 
 
 function searchby_taskDetails(to_do_list,selected_data)
 {
+    let found = "false";
     for(key in to_do_list)
     {          
         let data = [];
         data = Object.values(to_do_list[key]);
         todoid = data[9];
+        
         if(data[1] === selected_data)
         {
+            found = "true";
             for(let key2 in data)
             {        
-                if (key2 > 7)
+                if (key2 > 7){
                     break; 
-                if(data.hasOwnProperty(key2) ){  
-                                
-                    let td = document.createElement("TD");
-                    let td_data = document.createTextNode(data[key2]);
-                    td.appendChild(td_data);
-                    document.getElementById("table_data").appendChild(td);
+                }else{
+                    table_data_appendChild(data[key2]);
                 }
             }
             createButton(todoid,"table_data");
         }
+    }
+    NoRecordFound(found);
+}
+
+function NoRecordFound(found)
+{
+    if(found == "false")
+    {
+        let td = document.createElement("TR");
+        let td_data = document.createTextNode("No Record Found");
+        td.appendChild(td_data);
+        document.getElementById("table_data").appendChild(td);
     }
 }
 
@@ -542,7 +554,6 @@ function to_do_search()
         selected_data = document.getElementById("task_details").value;
         searchby_taskDetails(to_do_list,selected_data);
     }
-
     
     cleanup();
 }
@@ -572,15 +583,20 @@ function date_validation()
     let endDate = document.getElementById("end_date").value;
 
     let d = new Date();
-    let date = d.getDate();
-    let month = d.getMonth();
-    let year = d.getFullYear();
-    
-    let  CurrentDate = new Date(year, month - 1, date);
-    alert(CurrentDate);
-    if((Date.parse(startDate)) < CurrentDate)
+
+    let startDate_year =  startDate.slice(0,4);
+    let startDate_month =  startDate.slice(5,7);
+    let startDate_date =  startDate.slice(8,10);
+
+    function clear()
     {
-        alert("StartDate must be of today or greater than today");
+        document.getElementById("end_date").value = "";
+        document.getElementById("start_date").value = "";
+    }
+
+    if(!(startDate_year >= d.getFullYear() && startDate_month >= (d.getMonth()+1) && startDate_date >= d.getDate() ))
+    {
+        alert("Selected Date must be greater than or equal to today");
         clear();
     }
 
@@ -589,11 +605,7 @@ function date_validation()
         clear();
     }
 
-    clear()
-    {
-        document.getElementById("end_date").value = "";
-        document.getElementById("start_date").value = "";
-    }
+    
 
 }
 
