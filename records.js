@@ -230,76 +230,22 @@ function todo_EditMode()
 function todo_Delete()
 {
     let checkboxes = document.getElementsByName("checkbox");
-    let selected_checkboxes = [];
-        
-    for (let i=0; i<checkboxes.length; i++) {
-           
-        if (checkboxes[i].checked) {
-            selected_checkboxes.push(checkboxes[i].id);
-        }
-    }
-
-    if(selected_checkboxes.length == 0)
-    {
-        alert("Cannot Delete, Must select a record to Delete!");
-    }
-
+    
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
     to_do_list = get_userData.todo;
-    let i = 0;
+    flag = 0;
 
-    for(let key = 0; key < get_userData.todo.length; key++)
-    {
-        let data = [];
-        data = Object.values(to_do_list[key]);
+    for (let i=checkboxes.length - 1; i>=0; i--) {       
+        if (checkboxes[i].checked) {
+            flag++;
             
-        if(data[9] == selected_checkboxes[i])
-        {            
-            i++;
-            
-            let confirm_delete = confirm("Are you sure, you want to delete this record  \n"+
-            data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
-            if (confirm_delete == true) {
-               to_do_list.splice(key, 1);
-               get_userData.todo = to_do_list;       
-               localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));        
-           
-               alert(data + '\n Record Deleted');
-               continue;
-            }
-            continue;     
+            to_do_list.splice(i, 1);
+            get_userData.todo = to_do_list;       
+            localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));                 
         }
-        continue;
-    }
-    // for(key in to_do_list)
-    // {        
-    //     let data = [];
-    //     data = Object.values(to_do_list[key]);
-            
-    //     alert(selected_checkboxes[i] + "  "+ data[9]);
-    //     if(data[9] == selected_checkboxes[i])
-    //     {            
-    //         i++;
-            
-    //         let confirm_delete = confirm("Are you sure, you want to delete this record  \n"+
-    //         data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
-    //         if (confirm_delete == true) {
-    //            to_do_list.splice(key, 1);
-    //            get_userData.todo = to_do_list;       
-    //            localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));        
-           
-    //            alert(data + '\n Record Deleted');
-    //            continue;
-    //         }
-    //         continue;     
-    //     }
-    //     continue;
-    // }
-
-    
+    }  
     location.reload();
-
 }
 
 function todo_Update()
