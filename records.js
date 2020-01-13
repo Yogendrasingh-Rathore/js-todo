@@ -150,14 +150,17 @@ function todo_EditMode()
             if(counter > 1)
             {
                 alert("Cannot Edit More than one record at a time!");
-                flag = "Multiple_Edit";
                 break;
             }    
             checkbox_id = checkboxes[i].id;
         }
     }
 
-    if(flag !="Multiple_Edit")
+    if(counter < 1)
+    {
+        alert("Cannot Edit, Must select a record before edit!");
+    }
+    if(counter == 1)
     {
         document.getElementById("status_section").style.display = "block";
         document.getElementById("Add_Task").style.display = "none";
@@ -236,6 +239,11 @@ function todo_Delete()
         }
     }
 
+    if(selected_checkboxes.length == 0)
+    {
+        alert("Cannot Delete, Must select a record to Delete!");
+    }
+
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
     to_do_list = get_userData.todo;
@@ -307,14 +315,18 @@ function todo_Update()
             if(counter > 1)
             {
                 alert("Cannot Update More than one record at a time!");
-                flag = "Multiple_Update";
                 break;
             }    
             checkbox_id = checkboxes[i].id;
         }
     }
 
-    if(flag !="Multiple_Update")
+    if(counter < 1)
+    {
+        alert("Cannot Update, Must select a record before Update!");
+    }
+
+    if(counter == 1)
     {
 
         let flag = reminder_validation();
