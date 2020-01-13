@@ -31,7 +31,7 @@ function validation()
     let address = document.getElementById("address").value;
     let profile_pic = document.getElementById("profile_pic").value;
 
-    if(uname == "" || password == "" || cpassword == "" || email == "" || address == "" || profile_pic == "")
+    if(uname == "" || password == "" || cpassword == "" || email == "")
     {
         alert("Fields cannot be left blank!");
         location.href = 'homepage.html';
@@ -84,6 +84,28 @@ function validation()
    
 }    
 
+function profile_image() {
+    let profile = document.getElementById("profile_pic").files[0];
+
+    let profile_url = getimgbase64(profile);
+    return profile_url;
+    
+    function getimgbase64(profile) {
+        let readImg = new FileReader();
+        readImg.readAsDataURL(profile);
+
+        readImg.onload = function () {
+            let profile_url = readImg.result;
+            // sessionStorage.setItem("profile_image", profile_url);
+            // document.getElementById("pp").src = sessionStorage.profile_image;
+            return profile_url;
+        };
+
+        // read_img.onerror = function (error) { };
+        
+    }
+}
+
 
 function profile_data()
 {
@@ -93,11 +115,12 @@ let gender_male = document.getElementById("gender_male");
 let gender_female = document.getElementById("gender_female");
 let email = document.getElementById("email").value;
 let address = document.getElementById("address").value;
-let profile_pic = document.getElementById("profile_pic").value;
+let profile_pic = profile_image();
 let category = [];
 let gender;
 
-let profile_pic_src = profile_pic.split("fakepath\\");
+alert(profile_pic);
+// let profile_pic_src = profile_pic.split("fakepath\\");
 
     if (typeof(Storage) !== "undefined") {
 
@@ -148,10 +171,10 @@ let profile_pic_src = profile_pic.split("fakepath\\");
                 password : password,
                 gender : gender,
                 address : address,
-                userImage : profile_pic_src[1],
                 Category : category
                 };
 
+                    obj.userImage = profile_pic;
                     obj.todo = [];
                     obj.toDoId = 0;
                     let users = loadUserData();
@@ -167,6 +190,7 @@ let profile_pic_src = profile_pic.split("fakepath\\");
                     }
                     localStorage.setItem(obj.userName, JSON.stringify(obj));
                     alert("Registration Successful..");
+
                     login_fn();
         }
     }

@@ -33,9 +33,10 @@
             sel.add(opt, key); 
  
     }
-
-
+    
 })();
+
+
 
 function selected_searchItem()
 {
@@ -84,8 +85,8 @@ function selected_searchItem()
 }
 
 
-var d = new Date();
-var display_date = ''+ d.getDate() +'/'+ (d.getMonth()+1) + '/'+d.getFullYear();
+let d = new Date();
+let display_date = ''+ d.getDate() +'/'+ (d.getMonth()+1) + '/'+d.getFullYear();
 document.getElementById("time_date").innerHTML = display_date;    
 
 function add_category()

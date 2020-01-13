@@ -54,6 +54,13 @@ function to_do()
 {
     let flag = reminder_validation();
 
+    let e = document.getElementById("category").value;
+    if(e=="")
+    {
+        flag=1;
+        alert("To Do not added, Must select the category");
+    }
+
     if(flag == 0)
     {
         let userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
@@ -131,7 +138,7 @@ function createButton(checkbox_id,flag)
     }
     else
     {
-        document.getElementById("search_list").appendChild(td);         
+        document.getElementById("table_data").appendChild(td);         
     }
 
     return 0;
@@ -234,12 +241,9 @@ function todo_Delete()
     let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
     let to_do_list = [];
     to_do_list = get_userData.todo;
-    flag = 0;
 
     for (let i=checkboxes.length - 1; i>=0; i--) {       
         if (checkboxes[i].checked) {
-            flag++;
-            
             to_do_list.splice(i, 1);
             get_userData.todo = to_do_list;       
             localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));                 
@@ -357,6 +361,147 @@ function todo_Update()
     }
 }
 
+
+function searchby_category(to_do_list,selected_data)
+{
+    for(key in to_do_list)
+    {          
+            let data = [];
+            data = Object.values(to_do_list[key]);
+            
+            todoid = data[9]; 
+
+                    if(data[0] === selected_data)
+                    {                  
+                        for(let key2 in data)
+                        {        
+                            if (key2 > 7)
+                                break; 
+                            if(data.hasOwnProperty(key2) ){  
+                                
+                                let td = document.createElement("TD");
+                                let td_data = document.createTextNode(data[key2]);
+                                td.appendChild(td_data);
+                                document.getElementById("table_data").appendChild(td);
+                            }
+                        }
+                        createButton(todoid,"table_data");                       
+                    }                      
+    }               
+}
+
+function searchby_startDate(to_do_list,selected_data)
+{
+    for(key in to_do_list)
+    {          
+            let data = [];
+            data = Object.values(to_do_list[key]);
+            
+            todoid = data[9]; 
+
+            if(data[2] === selected_data)
+            {
+                        
+                for(let key2 in data)
+                {        
+                    if (key2 > 7)
+                         break; 
+                    if(data.hasOwnProperty(key2) ){  
+                                
+                        let td = document.createElement("TD");
+                        let td_data = document.createTextNode(data[key2]);
+                        td.appendChild(td_data);
+                        document.getElementById("table_data").appendChild(td);
+                    }
+                }
+            createButton(todoid,"table_data");
+            }                     
+    }
+}
+
+function searchby_endDate(to_do_list,selected_data)
+{
+    for(key in to_do_list)
+    {          
+        let data = [];
+        data = Object.values(to_do_list[key]);
+            
+        todoid = data[9]; 
+            if(data[3] === selected_data)
+            {
+                
+                for(let key2 in data)
+                {        
+                    if (key2 > 7)
+                        break; 
+                    if(data.hasOwnProperty(key2) ){  
+                        
+                        let td = document.createElement("TD");
+                        let td_data = document.createTextNode(data[key2]);
+                        td.appendChild(td_data);
+                        document.getElementById("table_data").appendChild(td);
+                    }
+                }
+                createButton(todoid,"table_data");
+            } 
+    }  
+}
+
+function searchby_status(to_do_list,selected_data)
+{
+    for(key in to_do_list)
+    {          
+        let data = [];
+        data = Object.values(to_do_list[key]);
+            
+        todoid = data[9];
+        if(data[4] === selected_data)
+        {
+                        
+            for(let key2 in data)
+            {        
+                if (key2 > 7)
+                break; 
+                if(data.hasOwnProperty(key2) ){  
+                                
+                let td = document.createElement("TD");
+                let td_data = document.createTextNode(data[key2]);
+                td.appendChild(td_data);
+                document.getElementById("table_data").appendChild(td);
+                }
+            }
+            createButton(todoid,"table_data");
+        }                      
+    }
+}
+
+
+function searchby_taskDetails(to_do_list,selected_data)
+{
+    for(key in to_do_list)
+    {          
+        let data = [];
+        data = Object.values(to_do_list[key]);
+        todoid = data[9];
+        if(data[1] === selected_data)
+        {
+            for(let key2 in data)
+            {        
+                if (key2 > 7)
+                    break; 
+                if(data.hasOwnProperty(key2) ){  
+                                
+                    let td = document.createElement("TD");
+                    let td_data = document.createTextNode(data[key2]);
+                    td.appendChild(td_data);
+                    document.getElementById("table_data").appendChild(td);
+                }
+            }
+            createButton(todoid,"table_data");
+        }
+    }
+}
+
 function to_do_search()
 {
     document.getElementById("todolist").style.display = "none";
@@ -371,192 +516,45 @@ function to_do_search()
 
     let searchby = document.getElementById("search_by").value;
     let selected_data;
-    let flag;
     
     if(searchby === "Category")
     {
         selected_data = document.getElementById("category_search").value;
-        flag = "Category";
+        searchby_category(to_do_list,selected_data);
     }
     if(searchby === "Start_date")
     {
         selected_data = document.getElementById("startdate_search").value;
-        flag = "Start_date";
+        searchby_startDate(to_do_list,selected_data);
     }
     if(searchby === "End_date")
     {
         selected_data = document.getElementById("enddate_search").value;
-        flag = "End_date";
+        searchby_endDate(to_do_list,selected_data);
     }
     if(searchby === "Status")
     {
         selected_data = document.getElementById("status_search").value;
-        flag = "Status";
+        searchby_status(to_do_list,selected_data);
     }
     if(searchby === "Task Details")
     {
         selected_data = document.getElementById("task_details").value;
-        flag = "task_details";
+        searchby_taskDetails(to_do_list,selected_data);
     }
 
-    for(key in to_do_list)
-    {        
-        if(to_do_list.hasOwnProperty(key) ){
-           
-            let data = [];
-            data = Object.values(to_do_list[key]);
-            let tr = document.createElement("TR");
-            document.getElementById("search_list").appendChild(tr);
-            todoid = data[9]; 
-            
-            switch(flag) {
-                case "Category":
-                    if(data[0] === selected_data)
-                    {
-                        
-                        for(let key2 in data)
-                        {        
-                            if (key2 > 7)
-                                break; 
-                            if(data.hasOwnProperty(key2) ){  
-                                
-                                let td = document.createElement("TD");
-                                let td_data = document.createTextNode(data[key2]);
-                                td.appendChild(td_data);
-                                document.getElementById("search_list").appendChild(td);
-                            }
-                        }
-                        let Delete_id = 'Delete' + todoid;
-                        let Update_id = 'Update' + todoid;
-                        let EditMode_id = 'EditMode' + todoid;
-                        
-                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
-                        
-                    }                      
-                
-                break;
-                
-                case "Start_date":
-                    if(data[2] === selected_data)
-                    {
-                        
-                        for(let key2 in data)
-                        {        
-                            if (key2 > 7)
-                                break; 
-                            if(data.hasOwnProperty(key2) ){  
-                                
-                                let td = document.createElement("TD");
-                                let td_data = document.createTextNode(data[key2]);
-                                td.appendChild(td_data);
-                                document.getElementById("search_list").appendChild(td);
-                            }
-                        }
-
-                        let Delete_id = 'Delete' + todoid;
-                        let Update_id = 'Update' + todoid;
-                        let EditMode_id = 'EditMode' + todoid;
-                        
-                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
-                    }                      
-                
-                break;
-                
-                case "End_date":
-                    if(data[3] === selected_data)
-                    {
-                        
-                        for(let key2 in data)
-                        {        
-                            if (key2 > 7)
-                                break; 
-                            if(data.hasOwnProperty(key2) ){  
-                                
-                                let td = document.createElement("TD");
-                                let td_data = document.createTextNode(data[key2]);
-                                td.appendChild(td_data);
-                                document.getElementById("search_list").appendChild(td);
-                            }
-                        }
-
-                        let Delete_id = 'Delete' + todoid;
-                        let Update_id = 'Update' + todoid;
-                        let EditMode_id = 'EditMode' + todoid;
-                        
-                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
-                    }                      
-                
-                break;
-                
-                case "Status":
-                    if(data[4] === selected_data)
-                    {
-                        
-                        for(let key2 in data)
-                        {        
-                            if (key2 > 7)
-                                break; 
-                            if(data.hasOwnProperty(key2) ){  
-                                
-                                let td = document.createElement("TD");
-                                let td_data = document.createTextNode(data[key2]);
-                                td.appendChild(td_data);
-                                document.getElementById("search_list").appendChild(td);
-                            }
-                        }
-
-                        let Delete_id = 'Delete' + todoid;
-                        let Update_id = 'Update' + todoid;
-                        let EditMode_id = 'EditMode' + todoid;
-                        
-                        createButton(Update_id,Delete_id,EditMode_id,"search_list");
-                    }                      
-                
-                break;
-
-                case "task_details":
-
-                    if(data[1] === selected_data)
-                    {
-                        for(let key2 in data)
-                        {        
-                            if (key2 > 7)
-                                break; 
-                            if(data.hasOwnProperty(key2) ){  
-                                
-                                let td = document.createElement("TD");
-                                let td_data = document.createTextNode(data[key2]);
-                                td.appendChild(td_data);
-                                document.getElementById("search_list").appendChild(td);
-                            }
-                        }
-                    }
-
-                break;
-                
-                  default: alert("Default Section");  
-                  
-              }         
-        }                    
-    }   
+    
     cleanup();
 }
 
 
 function empty_table()
 {
-    // let Parent = document.getElementById("search_list");
-
-    var x = document.getElementById("search_list").rows.length;
-    
-    for(let i=1;i<x;i++)
+    let Parent = document.getElementById("table_data");
+    while(Parent.hasChildNodes())
     {
-        document.getElementById("search_list").deleteRow(i);
+       Parent.removeChild(Parent.firstChild);
     }
-    // while(Parent.hasChildNodes())
-    // {
-    //    Parent.removeChild(Parent.firstChild);
-    // }
 }
 
 function cleanup()
@@ -573,10 +571,28 @@ function date_validation()
     let startDate = document.getElementById("start_date").value;
     let endDate = document.getElementById("end_date").value;
 
+    let d = new Date();
+    let date = d.getDate();
+    let month = d.getMonth();
+    let year = d.getFullYear();
+    
+    let  CurrentDate = new Date(year, month - 1, date);
+    alert(CurrentDate);
+    if((Date.parse(startDate)) < CurrentDate)
+    {
+        alert("StartDate must be of today or greater than today");
+        clear();
+    }
+
     if ((Date.parse(startDate) >= Date.parse(endDate))) {
-            alert("End date should be greater than Start date");
-            document.getElementById("end_date").value = "";
-            document.getElementById("start_date").value = "";
+        alert("End date should be greater than Start date");
+        clear();
+    }
+
+    clear()
+    {
+        document.getElementById("end_date").value = "";
+        document.getElementById("start_date").value = "";
     }
 
 }
@@ -588,37 +604,21 @@ function reminder_validation()
     let flag = 0;
         
         let isReminder_yes = document.getElementById("isReminder_yes");
-        let isReminder_no = document.getElementById("isReminder_no");
         let isReminder_date = document.getElementById("isReminder_date").value;
-        let isPublic_yes = document.getElementById("isPublic_yes");
-        let isPublic_no = document.getElementById("isPublic_no");
-        let isReminder, isPublic;
+        let isReminder;
 
-        if(isReminder_yes.checked == true)
+        if(isReminder_yes.checked)
         {
             isReminder = "Yes";
-        }
-        else
+        }else
         {
             isReminder = "No";
         }
 
-        if(isPublic_yes.checked == true)
-        {
-            isPublic = "Yes";
-        }
-        else
-        {
-            isPublic = "No";
-        }
-
-        if(start_date=="")
+        if(start_date=="" || end_date=="")
         {
             flag = 1;
-        }else if(end_date=="")
-        {
-            flag = 1;
-        }else if(isReminder_date < start_date || isReminder_date > end_date)
+        }else if(isReminder_date < start_date && isReminder == "Yes"|| isReminder_date > end_date && isReminder == "Yes")
         {
              flag = 2;
         }else if(isReminder =="Yes" && isReminder_date =="")
@@ -638,7 +638,7 @@ function reminder_validation()
             alert("Cannot Add To-Do, Must have Start and End Date");
             break;
         case 2:
-            alert("The Date must be between " + start_date + " and " + end_date);        
+            alert("The Reminder Date must be between " + start_date + " and " + end_date);        
             document.getElementById("isReminder_date").value = "";              
             break;
         case 3:
