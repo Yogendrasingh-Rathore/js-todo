@@ -233,7 +233,6 @@ function todo_Delete()
            
         if (checkboxes[i].checked) {
             selected_checkboxes.push(checkboxes[i].id);
-            alert(selected_checkboxes[i]);
         }
     }
 
@@ -247,7 +246,6 @@ function todo_Delete()
         let data = [];
         data = Object.values(to_do_list[key]);
             
-        alert(selected_checkboxes[i] + "  "+ data[9]);
         if(data[9] == selected_checkboxes[i])
         {            
             i++;
