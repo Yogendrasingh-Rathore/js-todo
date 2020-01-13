@@ -44,12 +44,7 @@
             }                      
         }
         
-        
-        let Delete_id = 'Delete' + todoid;
-        let Update_id = 'Update' + todoid;
-        let EditMode_id = 'EditMode' + todoid;
-        
-        createButton(Update_id,Delete_id,EditMode_id,"todolist");
+        createButton(todoid,"todolist");
         
     } 
 
@@ -65,9 +60,6 @@ function to_do()
 
         let e = document.getElementById("category");
         let category = e.options[e.selectedIndex].value;
-
-        // let s = document.getElementById("status");
-        // let status = s.options[s.selectedIndex].value;
 
         let start_date = document.getElementById("start_date").value;
         let end_date = document.getElementById("end_date").value;
@@ -123,35 +115,16 @@ function to_do()
 }
 
 
-
-
-function createButton(Update_id,Delete_id,EditMode_id,flag)
+function createButton(checkbox_id,flag)
 {
-    
-    let button_Update = document.createElement("INPUT");
-    button_Update.setAttribute("type", "button");
-    button_Update.setAttribute("value", "Update");
-    button_Update.setAttribute("id", Update_id);
-    // button_Update.setAttribute("hidden", true);
-    button_Update.setAttribute("onclick", "todo_Update(this.id)");
-
-    let button_Delete = document.createElement("INPUT");
-    button_Delete.setAttribute("type", "button");
-    button_Delete.setAttribute("value", "Delete");
-    button_Delete.setAttribute("id", Delete_id);
-    button_Delete.setAttribute("onclick", "todo_Delete(this.id)");
-
-    let button_EditMode = document.createElement("INPUT");
-    button_EditMode.setAttribute("type", "button");
-    button_EditMode.setAttribute("value", "EditMode");
-    button_EditMode.setAttribute("id", EditMode_id);
-    button_EditMode.setAttribute("onclick", "todo_EditMode(this.id)");
+    let checkbox = document.createElement('input');
+    checkbox.type = "checkbox"; 
+    checkbox.name = "checkbox"; 
+    checkbox.id = checkbox_id;   
 
     let td = document.createElement("TD");
-    td.appendChild(button_EditMode);
-    td.appendChild(button_Update);
-    td.appendChild(button_Delete);
-
+    td.appendChild(checkbox);
+    
     if(flag == "todolist")
     {
         document.getElementById("todolist").appendChild(td);           
@@ -164,166 +137,41 @@ function createButton(Update_id,Delete_id,EditMode_id,flag)
     return 0;
 }
 
-function todo_EditMode(EditMode_id)
+function todo_EditMode()
 {
-    document.getElementById("status_section").style.display = "block";
-    document.getElementById("Add_Task").style.display = "none";
-
-    let size = EditMode_id.length;
-    let user_to_id = EditMode_id.charAt(size-1);
-
-    // let Update_id = 'Update' + user_to_id;
-
-    // document.getElementById(Update_id).style.display = "block";
-    
-    let isReminder_yes = document.getElementById("isReminder_yes");
-    let isReminder_no = document.getElementById("isReminder_no");
-    let isPublic_yes = document.getElementById("isPublic_yes");
-    let isPublic_no = document.getElementById("isPublic_no");
-    let isReminder, isPublic;
-
-    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-
-    let to_do_list = [];
-    to_do_list = get_userData.todo;    
-
-    for(key in to_do_list)
-    {        
-        if(to_do_list.hasOwnProperty(key) ){
-           
-            let data = [];
-            data = Object.values(to_do_list[key]);
-
-            if(data[9] == user_to_id)
-            {
-                
-                let category = document.getElementById("category");
-                category.value = data[0];
-                let task = document.getElementById("task");
-                task.value = data[1];
-                let start_date = document.getElementById("start_date");
-                start_date.value = data[2];
-                let end_date = document.getElementById("end_date");
-                end_date.value = data[3];
-                let status = document.getElementById("status");
-                status.value = data[4];               
-                isReminder = data[5];
-                if(isReminder == "Yes")
-                {
-                    isReminder_yes.checked = true;
-                }
-                else
-                {
-                    isReminder_no.checked = true;
-                }
-                let isReminder_date = document.getElementById("isReminder_date");
-                isReminder_date.value = data[6];
-                isPublic = data[7];   
-                if(isPublic == "Yes")
-                {
-                    isPublic_yes.checked = true;
-                }
-                else
-                {
-                    isPublic_no.checked = true;
-                }            
-
-                alert("Selected Record is Displayed on the 'Add Task' tab!");
-                break;
-            }
-            
-        }
-    }
-
-}
-
-function todo_Delete(Delete_id)
-{
-    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
-    let to_do_list = [];
-    to_do_list = get_userData.todo;
-
-    let size = Delete_id.length;
-    let user_to_id = Delete_id.charAt(size-1);
-
-    for(key in to_do_list)
-    {        
-        if(to_do_list.hasOwnProperty(key) ){
-           
-            let data = [];
-            data = Object.values(to_do_list[key]);
-            
-            if(data[9] == user_to_id)
-            {
-                
-                let confirm_delete = confirm("Are you sure, you want to delete this record  "+
-                data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
-                if (confirm_delete == true) {
-                    to_do_list.splice(key, 1);
-                    alert(data + ' Record Deleted');
-                }
-                break;
-            }
-            
-        }
-    }
-    get_userData.todo = to_do_list;       
+    let checkboxes = document.getElementsByName("checkbox");
+    let counter=0;
+    let flag;
         
-    localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));        
+    for (let i=0; i<checkboxes.length; i++) {
            
-    location.reload();
+        if (checkboxes[i].checked) {
+            counter++;
+            if(counter > 1)
+            {
+                alert("Cannot Edit More than one record at a time!");
+                flag = "Multiple_Edit";
+                break;
+            }    
+            checkbox_id = checkboxes[i].id;
+        }
+    }
 
-}
-
-function todo_Update(Update_id)
-{
-    let flag = reminder_validation();
-
-    if(flag == 0)
+    if(flag !="Multiple_Edit")
     {
+        document.getElementById("status_section").style.display = "block";
+        document.getElementById("Add_Task").style.display = "none";
+
+        let isReminder_yes = document.getElementById("isReminder_yes");
+        let isReminder_no = document.getElementById("isReminder_no");
+        let isPublic_yes = document.getElementById("isPublic_yes");
+        let isPublic_no = document.getElementById("isPublic_no");
+        let isReminder, isPublic;
+
         let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
 
         let to_do_list = [];
-        to_do_list = get_userData.todo;
-
-        let size = Update_id.length;
-        let user_to_id = Update_id.charAt(size-1);
-
-        let e = document.getElementById("category");
-        let category = e.options[e.selectedIndex].value;
-
-        let s = document.getElementById("status");
-        let status = s.options[s.selectedIndex].value;
-
-        let start_date = document.getElementById("start_date").value;
-        let end_date = document.getElementById("end_date").value;
-        let task = document.getElementById("task").value;
-    
-            let isReminder_yes = document.getElementById("isReminder_yes");
-            let isReminder_no = document.getElementById("isReminder_no");
-            let isReminder_date = document.getElementById("isReminder_date").value;
-            let isPublic_yes = document.getElementById("isPublic_yes");
-            let isPublic_no = document.getElementById("isPublic_no");
-            let isReminder, isPublic;
-
-            if(isReminder_yes.checked == true)
-            {
-                isReminder = "Yes";
-            }
-            else
-            {
-                isReminder = "No";
-            }
-
-            if(isPublic_yes.checked == true)
-            {
-                isPublic = "Yes";
-            }
-            else
-            {
-                isPublic = "No";
-            }
-
+        to_do_list = get_userData.todo;    
 
         for(key in to_do_list)
         {        
@@ -331,37 +179,226 @@ function todo_Update(Update_id)
             
                 let data = [];
                 data = Object.values(to_do_list[key]);
-                
-                if(data[9] == user_to_id)
+
+                if(data[9] == checkbox_id)
                 {
-                    let confirm_update = confirm("Old Record : "+
-                    data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]
-                    + "\nUpdated Record :  " + category + " " + task + " " + start_date + " " + end_date + " " + status
-                    + "\nDo you want to Update");
-                    if (confirm_update == true) {
-                    data[0] = category;
-                    data[1] = task;
-                    data[2] = start_date;
-                    data[3] = end_date;
-                    data[4] = status;  
-                    data[5] = isReminder;
-                    data[6] = isReminder_date;
-                    data[7] = isPublic;
-                    to_do_list[key] = data;
-                    alert('Data Updated');
+                    
+                    let category = document.getElementById("category");
+                    category.value = data[0];
+                    let task = document.getElementById("task");
+                    task.value = data[1];
+                    let start_date = document.getElementById("start_date");
+                    start_date.value = data[2];
+                    let end_date = document.getElementById("end_date");
+                    end_date.value = data[3];
+                    let status = document.getElementById("status");
+                    status.value = data[4];               
+                    isReminder = data[5];
+                    if(isReminder == "Yes")
+                    {
+                        isReminder_yes.checked = true;
                     }
+                    else
+                    {
+                        isReminder_no.checked = true;
+                    }
+                    let isReminder_date = document.getElementById("isReminder_date");
+                    isReminder_date.value = data[6];
+                    isPublic = data[7];   
+                    if(isPublic == "Yes")
+                    {
+                        isPublic_yes.checked = true;
+                    }
+                    else
+                    {
+                        isPublic_no.checked = true;
+                    }            
+
+                    alert("Selected Record is Displayed on the 'Add Task' tab!");
                     break;
                 }
                 
             }
         }
-        get_userData.todo = to_do_list;
-
-        localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));     
-        cleanup();
-        location.reload();
     }
+
+}
+
+function todo_Delete()
+{
+    let checkboxes = document.getElementsByName("checkbox");
+    let selected_checkboxes = [];
+        
+    for (let i=0; i<checkboxes.length; i++) {
+           
+        if (checkboxes[i].checked) {
+            selected_checkboxes.push(checkboxes[i].id);
+            alert(selected_checkboxes[i]);
+        }
+    }
+
+    let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+    let to_do_list = [];
+    to_do_list = get_userData.todo;
+    let i = 0;
+
+    for(let key = 0; key < get_userData.todo.length; key++)
+    {
+        let data = [];
+        data = Object.values(to_do_list[key]);
+            
+        alert(selected_checkboxes[i] + "  "+ data[9]);
+        if(data[9] == selected_checkboxes[i])
+        {            
+            i++;
+            
+            let confirm_delete = confirm("Are you sure, you want to delete this record  \n"+
+            data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
+            if (confirm_delete == true) {
+               to_do_list.splice(key, 1);
+               get_userData.todo = to_do_list;       
+               localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));        
+           
+               alert(data + '\n Record Deleted');
+               continue;
+            }
+            continue;     
+        }
+        continue;
+    }
+    // for(key in to_do_list)
+    // {        
+    //     let data = [];
+    //     data = Object.values(to_do_list[key]);
+            
+    //     alert(selected_checkboxes[i] + "  "+ data[9]);
+    //     if(data[9] == selected_checkboxes[i])
+    //     {            
+    //         i++;
+            
+    //         let confirm_delete = confirm("Are you sure, you want to delete this record  \n"+
+    //         data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]);
+    //         if (confirm_delete == true) {
+    //            to_do_list.splice(key, 1);
+    //            get_userData.todo = to_do_list;       
+    //            localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));        
+           
+    //            alert(data + '\n Record Deleted');
+    //            continue;
+    //         }
+    //         continue;     
+    //     }
+    //     continue;
+    // }
+
     
+    location.reload();
+
+}
+
+function todo_Update()
+{
+    let checkboxes = document.getElementsByName("checkbox");
+    let counter=0;
+    let flag;
+        
+    for (let i=0; i<checkboxes.length; i++) {
+           
+        if (checkboxes[i].checked) {
+            counter++;
+            if(counter > 1)
+            {
+                alert("Cannot Update More than one record at a time!");
+                flag = "Multiple_Update";
+                break;
+            }    
+            checkbox_id = checkboxes[i].id;
+        }
+    }
+
+    if(flag !="Multiple_Update")
+    {
+
+        let flag = reminder_validation();
+
+        if(flag == 0)
+        {
+            let get_userData = JSON.parse(localStorage.getItem(sessionStorage.getItem('activeUser')));
+
+            let to_do_list = [];
+            to_do_list = get_userData.todo;
+
+            let e = document.getElementById("category");
+            let category = e.options[e.selectedIndex].value;
+
+            let s = document.getElementById("status");
+            let status = s.options[s.selectedIndex].value;
+
+            let start_date = document.getElementById("start_date").value;
+            let end_date = document.getElementById("end_date").value;
+            let task = document.getElementById("task").value;
+        
+                let isReminder_yes = document.getElementById("isReminder_yes");
+                let isReminder_no = document.getElementById("isReminder_no");
+                let isReminder_date = document.getElementById("isReminder_date").value;
+                let isPublic_yes = document.getElementById("isPublic_yes");
+                let isPublic_no = document.getElementById("isPublic_no");
+                let isReminder, isPublic;
+
+                if(isReminder_yes.checked == true)
+                {
+                    isReminder = "Yes";
+                }
+                else
+                {
+                    isReminder = "No";
+                }
+
+                if(isPublic_yes.checked == true)
+                {
+                    isPublic = "Yes";
+                }
+                else
+                {
+                    isPublic = "No";
+                }
+
+
+            for(key in to_do_list)
+            {        
+                    let data = [];
+                    data = Object.values(to_do_list[key]);
+                    
+                    if(data[9] == checkbox_id)
+                    {
+                        let confirm_update = confirm("Old Record : "+
+                        data[0] + " " + data[1] + " " + data[2] + " " + data[3] + " " + data[4]
+                        + "\nUpdated Record :  " + category + " " + task + " " + start_date + " " + end_date + " " + status
+                        + "\nDo you want to Update");
+                        if (confirm_update == true) {
+                        data[0] = category;
+                        data[1] = task;
+                        data[2] = start_date;
+                        data[3] = end_date;
+                        data[4] = status;  
+                        data[5] = isReminder;
+                        data[6] = isReminder_date;
+                        data[7] = isPublic;
+                        to_do_list[key] = data;
+                        alert('Data Updated');
+                        }
+                        break;
+                    }
+                    
+                
+            }
+            get_userData.todo = to_do_list;
+
+            localStorage.setItem(sessionStorage.getItem('activeUser'),JSON.stringify(get_userData));     
+            cleanup();
+            location.reload();
+        }
+    }
 }
 
 function to_do_search()
@@ -399,6 +436,11 @@ function to_do_search()
     {
         selected_data = document.getElementById("status_search").value;
         flag = "Status";
+    }
+    if(searchby === "Task Details")
+    {
+        selected_data = document.getElementById("task_details").value;
+        flag = "task_details";
     }
 
     for(key in to_do_list)
@@ -515,6 +557,26 @@ function to_do_search()
                     }                      
                 
                 break;
+
+                case "task_details":
+
+                    if(data[1] === selected_data)
+                    {
+                        for(let key2 in data)
+                        {        
+                            if (key2 > 7)
+                                break; 
+                            if(data.hasOwnProperty(key2) ){  
+                                
+                                let td = document.createElement("TD");
+                                let td_data = document.createTextNode(data[key2]);
+                                td.appendChild(td_data);
+                                document.getElementById("search_list").appendChild(td);
+                            }
+                        }
+                    }
+
+                break;
                 
                   default: alert("Default Section");  
                   
@@ -527,11 +589,18 @@ function to_do_search()
 
 function empty_table()
 {
-    let Parent = document.getElementById("search_list");
-    while(Parent.hasChildNodes())
+    // let Parent = document.getElementById("search_list");
+
+    var x = document.getElementById("search_list").rows.length;
+    
+    for(let i=1;i<x;i++)
     {
-       Parent.removeChild(Parent.firstChild);
+        document.getElementById("search_list").deleteRow(i);
     }
+    // while(Parent.hasChildNodes())
+    // {
+    //    Parent.removeChild(Parent.firstChild);
+    // }
 }
 
 function cleanup()
@@ -561,15 +630,6 @@ function reminder_validation()
     let start_date = document.getElementById("start_date").value;
     let end_date = document.getElementById("end_date").value;
     let flag = 0;
-
-    if(start_date=="")
-    {
-        flag = 1;
-    }    
-    if(end_date=="")
-    {
-        flag = 1;
-    }
         
         let isReminder_yes = document.getElementById("isReminder_yes");
         let isReminder_no = document.getElementById("isReminder_no");
@@ -577,11 +637,6 @@ function reminder_validation()
         let isPublic_yes = document.getElementById("isPublic_yes");
         let isPublic_no = document.getElementById("isPublic_no");
         let isReminder, isPublic;
-
-    if (isReminder_date < start_date || isReminder_date > end_date)
-     {
-          flag = 2;
-     }
 
         if(isReminder_yes.checked == true)
         {
@@ -601,15 +656,25 @@ function reminder_validation()
             isPublic = "No";
         }
 
-    if(isReminder =="Yes" && isReminder_date =="")
-    {
-        flag = 3;
-    }
-
-    if(isReminder =="No" && isReminder_date !="")
-    {
-        flag = 4;
-    }
+        if(start_date=="")
+        {
+            flag = 1;
+        }else if(end_date=="")
+        {
+            flag = 1;
+        }else if(isReminder_date < start_date || isReminder_date > end_date)
+        {
+             flag = 2;
+        }else if(isReminder =="Yes" && isReminder_date =="")
+        {
+            flag = 3;
+        }else if(isReminder =="No" && isReminder_date !="")
+        {
+            flag = 4;
+        }else if(isReminder =="No" && isReminder_date =="")
+        {
+            flag = 0;
+        }
 
 
     switch(flag) {

@@ -46,15 +46,15 @@ function selected_searchItem()
         document.getElementById("searchby_StartDate").style.display = "none";
         document.getElementById("searchby_EndDate").style.display = "none";
         document.getElementById("searchby_status").style.display = "none";
-        document.getElementById("searchby_category").style.display = "block";
-    
-
+        document.getElementById("task_details").style.display = "none";
+        document.getElementById("searchby_category").style.display = "block";        
     }
     else if(selected_item === "Start_date")
     {
     document.getElementById("searchby_category").style.display = "none";
     document.getElementById("searchby_EndDate").style.display = "none";
     document.getElementById("searchby_status").style.display = "none"; 
+    document.getElementById("task_details").style.display = "none";
     document.getElementById("searchby_StartDate").style.display = "block";
     }
     else if(selected_item === "End_date")
@@ -62,6 +62,7 @@ function selected_searchItem()
         document.getElementById("searchby_category").style.display = "none";
         document.getElementById("searchby_StartDate").style.display = "none";
         document.getElementById("searchby_status").style.display = "none"; 
+        document.getElementById("task_details").style.display = "none";
         document.getElementById("searchby_EndDate").style.display = "block";
     }
     else if(selected_item === "Status")
@@ -69,7 +70,16 @@ function selected_searchItem()
         document.getElementById("searchby_category").style.display = "none";
         document.getElementById("searchby_EndDate").style.display = "none";
         document.getElementById("searchby_StartDate").style.display = "none";
+        document.getElementById("task_details").style.display = "none";
         document.getElementById("searchby_status").style.display = "block"; 
+    }
+    else if(selected_item === "Task Details")
+    {
+        document.getElementById("searchby_category").style.display = "none";
+        document.getElementById("searchby_EndDate").style.display = "none";
+        document.getElementById("searchby_StartDate").style.display = "none";
+        document.getElementById("searchby_status").style.display = "none"; 
+        document.getElementById("task_details").style.display = "block";
     }
 }
 
